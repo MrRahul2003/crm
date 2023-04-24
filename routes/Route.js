@@ -5,12 +5,6 @@ const router = express.Router();
 import cookieParser from "cookie-parser";
 router.use(cookieParser());
 
-import path from "path";
-const __dirname = path.resolve();
-import pdf from "html-pdf";
-import ejs from "ejs";
-import nodemailer from "nodemailer";
-
 // controllers
 import {
   addCompany,
@@ -55,6 +49,7 @@ import {
   editSubProduct,
 } from "../controller/SubProductController.js";
 import {
+  pdfgen,
   addEnquiry,
   deleteEnquiry,
   getAllEnquiry,
@@ -147,70 +142,7 @@ route.post("/quotation/addquotation", addQuotation);
 route.post("/quotation/getquotation", getQuotation);
 
 //pdf generator
-route.post("/enquiry/sendenquiry", (req, res) => {
-  console.log(__dirname,req.body);
-  var itemList = req.body.enquiryInfo.itemList;
-  ejs.renderFile(
-    path.join(__dirname, "/routes/views", "/genpdf.ejs"),
-    {
-      users: "Ganesh sabat",
-      itemList: itemList
-    },
-    (err, data) => {
-      if (err) {
-        res.send(err);
-      } else {
-        let options = {
-          height: "11.25in",
-          width: "8.5in",
-          header: {
-            height: "20mm",
-          },
-          footer: {
-            height: "20mm",
-          },
-        };
-        pdf.create(data, options).toFile("enquiry.pdf", function (err, data) {
-          if (err) {
-            res.send(err);
-        } else {
-            console.log("erfdasfdsaf",err);
-            res.send("File created successfully");
-
-            // let mailtransporter = nodemailer.createTransport({
-            //   service: "gmail",
-            //   port: 465,
-            //   secure: false, // true for 465, false for other ports
-            //   auth: {
-            //     user: "ganeshsabat1457@gmail.com",
-            //     //   user: "rahulsdas2003@gmail.com",
-            //     pass: "fuzxewghibfceunh",
-            //   },
-            // });
-            // let maildetails = {
-            //   from: "ganeshsabat1457@gmail.com",
-            //   to: "ganesh.sabat16378@sakec.ac.in",
-            //   // to: sendingVendorsEmail[i],
-            //   subject: "Sending pdf",
-            //   text: "mail msg",
-            //   attachments: [
-            //     {
-            //       path: data.filename,
-            //     },
-            //   ],
-            // };
-            // mailtransporter.sendMail(maildetails, function (err, data) {
-            //   if (err) {
-            //     console.log(err);
-            //   } else {
-            //     console.log("Mail sent successfully");
-            //   }
-            // });
-          }
-        });
-      }
-    }
-  );
-});
+route.post("/enquiry/genenquiry", pdfgen);
+route.post("/enquiry/sendenquiry", sendMail);
 
 export default route;

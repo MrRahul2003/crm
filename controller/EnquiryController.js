@@ -1,47 +1,104 @@
-"use strict";
+// "use strict";
+
+import path from "path";
+const __dirname = path.resolve();
+
+import pdf from "html-pdf";
+import ejs from "ejs";
+import nodemailer from "nodemailer";
+
 import Enquiry from "../model/EnquiryModal.js";
 import Vendor from "../model/VendorModal.js";
-import nodemailer from "nodemailer";
+
+const pdfgen = async (req, res) => {
+  try {
+    console.log(__dirname, req.body);
+    var itemList = req.body.enquiryInfo.itemList;
+
+    if (itemList.length === 0) {
+      res.status(500).send("no itemList found");
+    } else {
+      ejs.renderFile(
+        path.join(__dirname, "/routes/views", "/genpdf.ejs"),
+        {
+          itemList: itemList,
+        },
+        (err, data) => {
+          if (err) {
+            res.status(500).send(err);
+          } else {
+            let options = {
+              height: "11.25in",
+              width: "8.5in",
+              header: {
+                height: "20mm",
+              },
+              footer: {
+                height: "20mm",
+              },
+            };
+            pdf
+              .create(data, options)
+              .toFile("./enquiryPdf/enquiry.pdf", function (err, data) {
+                if (err) {
+                  res.status(500).send(err);
+                } else {
+                  console.log("file created successfully");
+                  res.status(200).send("File created successfully");
+                }
+              });
+          }
+        }
+      );
+    }
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json(error.message);
+  }
+};
 
 const sendMail = async (req, res) => {
   try {
-    console.log("sendMail", req.body);
-
+    console.log("sendMail", req.body.receiver);
     const bodyMsg = "hii kaise hoo";
 
-    const sendingVendorsEmail = await req.body.filter(function (elem, pos) {
-      return req.body.indexOf(elem) == pos;
+    const sendingVendorsEmail = await req.body.receiver.filter(function (elem, pos) {
+      return req.body.receiver.indexOf(elem) == pos;
     });
     console.log(sendingVendorsEmail);
 
-    for (const i in sendingVendorsEmail) {
-      let transporter = nodemailer.createTransport({
-        service: "gmail",
-        port: 465,
-        secure: false, // true for 465, false for other ports
-        auth: {
-          user: "rahulsdas2003@gmail.com",
-          pass: "fuzxewghibfceunh",
+    // ----------------------------------yahn pr sa changes krna ha--------------------------------
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      port: 465,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: "rahulsdas2003@gmail.com",
+        pass: "kpnxfdblugphoexy"
+      },
+    });
+
+    let details = {
+      from: "rahulsdas2003@gmail.com",
+      to: sendingVendorsEmail,
+      subject: "Hello ✔ New Request for contacting AEGIS projects",
+      text: bodyMsg,
+      attachments: [
+        {
+          filename: "enquiry.pdf", // <= Here: made sure file name match
+          path: path.join(__dirname, "/enquiryPdf/enquiry.pdf"), // <= Here
+          contentType: "application/pdf",
         },
-      });
-  
-      let details = {
-        from: "rahulsdas2003@gmail.com",
-        to: sendingVendorsEmail[i],
-        subject: "Hello ✔ New Request for contacting AEGIS projects",
-        text: bodyMsg,
-      };
-  
-      let info = await transporter.sendMail(details);
-  
-      console.log("Message sent: %s", info.messageId);
-      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-      // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-    }
-
+      ],
+    };
+    let info = await transporter.sendMail(details);
+    console.log("Message sent: %s", info.messageId);
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
     return res.status(200).json(info);
+    // ----------------------------------yahn tak changes krna ha--------------------------------
 
-
+    // -----------------------------------mail sendor---------------------------------
   } catch (error) {
     console.log(error.message);
     return res.status(500).json(error.message);
@@ -220,4 +277,5 @@ export {
   getPipelineEnquiry,
   editenquiry,
   sendMail,
+  pdfgen,
 };

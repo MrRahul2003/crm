@@ -1,6 +1,7 @@
 import Vendor from "../model/VendorModal.js";
 
 const getAllVendor = async (req, res) => {
+  console.log(req.body);
   try {
     const employee_id = req.body.employee_id;
     const employee_email = req.body.employee_email;
