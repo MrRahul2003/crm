@@ -1,23 +1,20 @@
 import mongoose from "mongoose";
 
 // note Schema
-const QuotationSchema = new mongoose.Schema({
+const PurchaseorderSchema = new mongoose.Schema({
   employee_id: {
     type: String,
   },
   employee_email: {
     type: String,
   },
-  quotation_contact_id: {
+  purchaseorder_contact_id: {
     type: String,
   },
   enquiry_id: {
     type: String,
   },
-  vendor_id: {
-    type: String,
-  },
-  quotation_addingdate: {
+  purchaseorder_addingdate: {
     type: String,
   },
   itemList: {
@@ -29,5 +26,5 @@ const QuotationSchema = new mongoose.Schema({
   },
 });
 
-const Quotation = mongoose.model("Quotation", QuotationSchema);
-export default Quotation;
+const Purchaseorder = mongoose.model("Purchaseorder", PurchaseorderSchema);
+export default Purchaseorder;

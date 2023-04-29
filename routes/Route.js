@@ -72,6 +72,7 @@ import {
   deleteQuotation,
   editQuotation,
 } from "../controller/QuotationController.js";
+import { purchaseordergen, sendPurchaseorderMail } from "../controller/PurchaseOrderController.js";
 
 const route = express.Router();
 
@@ -140,9 +141,15 @@ route.post("/authentication/signin", addSignin);
 // quotation
 route.post("/quotation/addquotation", addQuotation);
 route.post("/quotation/getquotation", getQuotation);
+route.post("/quotation/editquotation", editQuotation);
+route.post("/quotation/deletequotation", deleteQuotation);
 
-//pdf generator
+//pdf generator -- enquiry
 route.post("/enquiry/genenquiry", pdfgen);
 route.post("/enquiry/sendenquiry", sendMail);
+
+//pdf generator -- purchaseorder
+route.post("/purchaseorder/genpurchaseorder", purchaseordergen);
+route.post("/purchaseorder/sendpurchaseorder", sendPurchaseorderMail);
 
 export default route;

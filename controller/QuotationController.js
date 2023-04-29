@@ -16,6 +16,7 @@ const getAllQuotation = async (req, res) => {
 };
 
 const getQuotation = async (req, res) => {
+  console.log(req.body);
   try {
     const employee_id = req.body.employee_id;
     const employee_email = req.body.employee_email;
@@ -55,7 +56,7 @@ const editQuotation = async (req, res) => {
 
     const employee_id = req.body.employee_id;
     const employee_email = req.body.employee_email;
-    const quotation_id = req.body._id;
+    const quotation_id = req.body.quotation_id;
 
     const updatedQuotation = await Quotation.updateOne(
       {
