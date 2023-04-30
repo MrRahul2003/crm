@@ -38,6 +38,8 @@ import {
   getAllProduct,
   deleteProduct,
   editProduct,
+  sendMailProduct,
+  pdfgenProduct,
 } from "../controller/ProductController.js";
 import {
   addSubProduct,
@@ -151,5 +153,9 @@ route.post("/enquiry/sendenquiry", sendMail);
 //pdf generator -- purchaseorder
 route.post("/purchaseorder/genpurchaseorder", purchaseordergen);
 route.post("/purchaseorder/sendpurchaseorder", sendPurchaseorderMail);
+
+//pdf generator -- productorder
+route.post("/productorder/genproductorder", pdfgenProduct);
+route.post("/productorder/sendproductorder", sendMailProduct);
 
 export default route;
