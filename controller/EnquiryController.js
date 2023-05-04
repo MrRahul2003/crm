@@ -19,7 +19,7 @@ const pdfgen = async (req, res) => {
       res.status(500).send("no itemList found");
     } else {
       ejs.renderFile(
-        path.join("../routes/views", "/genpdf.ejs"),
+        path.join(__dirname, "/routes/views", "/genpdf.ejs"),
         {
           itemList: itemList,
         },
@@ -86,7 +86,7 @@ const sendMail = async (req, res) => {
       attachments: [
         {
           filename: "enquiry.pdf", // <= Here: made sure file name match
-          path: path.join("../enquiryPdf/enquiry.pdf"), // <= Here
+          path: path.join(__dirname, "/enquiryPdf/enquiry.pdf"), // <= Here
           contentType: "application/pdf",
         },
       ],
