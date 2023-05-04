@@ -16,6 +16,7 @@ const pdfgen = async (req, res) => {
     var itemList = req.body.enquiryInfo.itemList;
 
     if (itemList.length === 0) {
+      console.log("0","no itemList found");
       res.status(500).send("no itemList found");
     } else {
       ejs.renderFile(
@@ -25,6 +26,7 @@ const pdfgen = async (req, res) => {
         },
         (err, data) => {
           if (err) {
+            console.log("1", err);
             res.status(500).send(err);
           } else {
             let options = {
@@ -41,6 +43,7 @@ const pdfgen = async (req, res) => {
               .create(data, options)
               .toFile("./enquiryPdf/enquiry.pdf", function (err, data) {
                 if (err) {
+                  console.log("1", err);
                   res.status(500).send(err);
                 } else {
                   console.log("file created successfully");
@@ -62,7 +65,10 @@ const sendMail = async (req, res) => {
     console.log("sendMail", req.body.receiver);
     const bodyMsg = "hii kaise hoo";
 
-    const sendingVendorsEmail = await req.body.receiver.filter(function (elem, pos) {
+    const sendingVendorsEmail = await req.body.receiver.filter(function (
+      elem,
+      pos
+    ) {
       return req.body.receiver.indexOf(elem) == pos;
     });
     console.log(sendingVendorsEmail);
@@ -74,7 +80,7 @@ const sendMail = async (req, res) => {
       secure: false, // true for 465, false for other ports
       auth: {
         user: "rahulsdas2003@gmail.com",
-        pass: "kpnxfdblugphoexy"
+        pass: "kpnxfdblugphoexy",
       },
     });
 
