@@ -12,14 +12,14 @@ import Vendor from "../model/VendorModal.js";
 
 const pdfgen = async (req, res) => {
   try {
-    console.log(__dirname + "/../routes/views", req.body);
+    console.log(__dirname, '..', "routes/views", req.body);
     var itemList = req.body.enquiryInfo.itemList;
 
     if (itemList.length === 0) {
       res.status(500).send("no itemList found");
     } else {
       ejs.renderFile(
-        path.join(__dirname, "/routes/views", "/genpdf.ejs"),
+        path.join(__dirname, '..', "routes/views", "/genpdf.ejs"),
         {
           itemList: itemList,
         },
