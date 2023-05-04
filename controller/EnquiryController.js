@@ -12,7 +12,7 @@ import Vendor from "../model/VendorModal.js";
 
 const pdfgen = async (req, res) => {
   try {
-    console.log(__dirname + "/routes/views", req.body);
+    console.log(__dirname + "/../routes/views", req.body);
     var itemList = req.body.enquiryInfo.itemList;
 
     if (itemList.length === 0) {
@@ -89,7 +89,7 @@ const sendMail = async (req, res) => {
       attachments: [
         {
           filename: "enquiry.pdf", // <= Here: made sure file name match
-          path: path.join(__dirname, "/enquiryPdf/enquiry.pdf"), // <= Here
+          path: path.join(__dirname, "/../enquiryPdf/enquiry.pdf"), // <= Here
           contentType: "application/pdf",
         },
       ],
