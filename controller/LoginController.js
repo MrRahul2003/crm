@@ -52,6 +52,7 @@ const addLogin = async (req, res) => {
           loginId: userExist._id,
           email: userExist.email,
           username: userExist.username,
+          userType: userExist.userType,
         });
       }
     } else {
@@ -62,4 +63,18 @@ const addLogin = async (req, res) => {
   }
 };
 
-export { addLogin, addSignin };
+const getLogin = async (req, res) => {
+  console.log(req.body);
+  try {
+    const email = req.body.email;
+
+    const LoginData = await Login.find({
+      email: email,
+    });
+    return res.status(200).json(LoginData);
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+};
+
+export { addLogin, addSignin, getLogin };

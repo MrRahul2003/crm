@@ -13,6 +13,10 @@ const loginSchema = new mongoose.Schema({
     type: String,
     select:true
   },
+  userType: {
+    type: String,
+    select:true
+  },
   login_addingdate: {
     type: String,
   },
