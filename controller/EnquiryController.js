@@ -43,7 +43,7 @@ const pdfgen = async (req, res) => {
               .create(data, options)
               .toFile("./enquiryPdf/enquiry.pdf", function (err, data) {
                 if (err) {
-                  console.log("1", err);
+                  console.log("2", err);
                   res.status(500).send(err);
                 } else {
                   console.log("file created successfully");
