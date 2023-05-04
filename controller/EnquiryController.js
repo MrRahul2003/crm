@@ -12,7 +12,7 @@ import Vendor from "../model/VendorModal.js";
 
 const pdfgen = async (req, res) => {
   try {
-    console.log(__dirname, req.body);
+    console.log(__dirname + "/routes/views", req.body);
     var itemList = req.body.enquiryInfo.itemList;
 
     if (itemList.length === 0) {
@@ -62,7 +62,10 @@ const sendMail = async (req, res) => {
     console.log("sendMail", req.body.receiver);
     const bodyMsg = "hii kaise hoo";
 
-    const sendingVendorsEmail = await req.body.receiver.filter(function (elem, pos) {
+    const sendingVendorsEmail = await req.body.receiver.filter(function (
+      elem,
+      pos
+    ) {
       return req.body.receiver.indexOf(elem) == pos;
     });
     console.log(sendingVendorsEmail);
@@ -74,7 +77,7 @@ const sendMail = async (req, res) => {
       secure: false, // true for 465, false for other ports
       auth: {
         user: "rahulsdas2003@gmail.com",
-        pass: "kpnxfdblugphoexy"
+        pass: "kpnxfdblugphoexy",
       },
     });
 
