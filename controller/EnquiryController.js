@@ -30,6 +30,9 @@ const pdfgen = async (req, res) => {
             res.status(500).send(err);
           } else {
             let options = {
+              env: {
+                OPENSSL_CONF: '/dev/null',
+              },
               height: "11.25in",
               width: "8.5in",
               header: {
