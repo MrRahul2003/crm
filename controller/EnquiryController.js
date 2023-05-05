@@ -43,7 +43,13 @@ const pdfgen = async (req, res) => {
               },
             };
             pdf
-              .create(data, options)
+              .create(data, {
+  childProcessOptions: {
+    env: {
+      OPENSSL_CONF: '/dev/null',
+    },
+  }
+})
               .toFile("./enquiryPdf/enquiry.pdf", function (err, data) {
                 if (err) {
                   console.log("2", err);
