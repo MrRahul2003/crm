@@ -37,9 +37,7 @@ import {
   getProduct,
   getAllProduct,
   deleteProduct,
-  editProduct,
-  sendMailProduct,
-  pdfgenProduct,
+  editProduct
 } from "../controller/ProductController.js";
 import {
   addSubProduct,
@@ -75,6 +73,7 @@ import {
   editQuotation,
 } from "../controller/QuotationController.js";
 import { purchaseordergen, sendPurchaseorderMail } from "../controller/PurchaseOrderController.js";
+import { pdfgenProduct, sendMailProduct } from "../controller/ProductOrderController.js";
 
 const route = express.Router();
 

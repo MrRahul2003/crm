@@ -179,6 +179,7 @@ const addEnquiry = async (req, res) => {
         {
           employee_id: employee_id,
           employee_email: employee_email,
+          enquiry_contact_id: enquiry_contact_id,
         },
         {
           $push: {
