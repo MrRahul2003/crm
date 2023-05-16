@@ -88,7 +88,7 @@ const pdfgen = async (req, res) => {
 const sendMail = async (req, res) => {
   try {
     console.log("sendMail", req.body.receiver);
-    const bodyMsg = "hii kaise hoo";
+    const bodyMsg = "This is Enquiry.";
 
     const sendingVendorsEmail = await req.body.receiver.filter(function (
       elem,

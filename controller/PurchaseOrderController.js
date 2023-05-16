@@ -101,7 +101,7 @@ const purchaseordergen = async (req, res) => {
 const sendPurchaseorderMail = async (req, res) => {
   try {
     console.log("sendMail", req.body.vendorData);
-    const bodyMsg = "hii kaise hoo";
+    const bodyMsg = "This is Purchase Order";
 
     // ----------------------------------yahn pr sa changes krna ha--------------------------------
     let transporter = nodemailer.createTransport({
@@ -121,7 +121,7 @@ const sendPurchaseorderMail = async (req, res) => {
       text: bodyMsg,
       attachments: [
         {
-          filename: "enquiry.pdf", // <= Here: made sure file name match
+          filename: "purchaseorderpdf.pdf", // <= Here: made sure file name match
           path: path.join(__dirname, "/pdf/purchaseorderpdf.pdf"), // <= Here
           contentType: "application/pdf",
         },

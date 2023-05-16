@@ -94,7 +94,7 @@ const pdfgenProduct = async (req, res) => {
 const sendMailProduct = async (req, res) => {
   try {
     console.log("sendMail", req.body.contactDetails);
-    const bodyMsg = "hii kaise hoo";
+    const bodyMsg = "This is Quotation for customer";
 
     // ----------------------------------yahn pr sa changes krna ha--------------------------------
     let transporter = nodemailer.createTransport({
@@ -114,7 +114,7 @@ const sendMailProduct = async (req, res) => {
       text: bodyMsg,
       attachments: [
         {
-          filename: "product.pdf", // <= Here: made sure file name match
+          filename: "productpdf.pdf", // <= Here: made sure file name match
           path: path.join(__dirname, "/pdf/productpdf.pdf"), // <= Here
           contentType: "application/pdf",
         },
