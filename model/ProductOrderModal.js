@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // note Schema
-const PurchaseOrderSchema = new mongoose.Schema({
+const ProductOrderSchema = new mongoose.Schema({
   employee_id: {
     type: String,
   },
@@ -11,22 +11,13 @@ const PurchaseOrderSchema = new mongoose.Schema({
   uuid_id: {
     type: String,
   },
-  purchaseorder_contact_id: {
+  productorder_contact_id: {
     type: String,
   },
   enquiry_id: {
     type: String,
-  },
-  quotation_id: {
-    type: String,
-  },
-  vendor_id: {
-    type: String,
-  },
-  vendor_email: {
-    type: String,
-  },
-  purchaseorder_addingdate: {
+  },  
+  productorder_addingdate: {
     type: String,
   },
   itemList: {
@@ -38,5 +29,5 @@ const PurchaseOrderSchema = new mongoose.Schema({
   },
 });
 
-const PurchaseOrder = mongoose.model("PurchaseOrder", PurchaseOrderSchema);
-export default PurchaseOrder;
+const ProductOrder = mongoose.model("ProductOrder", ProductOrderSchema);
+export default ProductOrder;

@@ -72,8 +72,8 @@ import {
   deleteQuotation,
   editQuotation,
 } from "../controller/QuotationController.js";
-import { purchaseordergen, sendPurchaseorderMail } from "../controller/PurchaseOrderController.js";
-import { pdfgenProduct, sendMailProduct } from "../controller/ProductOrderController.js";
+import { addPurchaseOrder, getAllPurchaseOrder, purchaseordergen, sendPurchaseorderMail } from "../controller/PurchaseOrderController.js";
+import { addProductOrder, getAllProductOrder, pdfgenProduct, sendMailProduct } from "../controller/ProductOrderController.js";
 
 const route = express.Router();
 
@@ -141,9 +141,18 @@ route.post("/authentication/signin", addSignin);
 
 // quotation
 route.post("/quotation/addquotation", addQuotation);
+route.post("/quotation/getallquotation", getAllQuotation);
 route.post("/quotation/getquotation", getQuotation);
 route.post("/quotation/editquotation", editQuotation);
 route.post("/quotation/deletequotation", deleteQuotation);
+
+// purchase order
+route.post("/purchaseorder/addpurchaseorder", addPurchaseOrder);
+route.post("/purchaseorder/getallpurchaseorder", getAllPurchaseOrder);
+
+// product order
+route.post("/productorder/addproductorder", addProductOrder);
+route.post("/productorder/getallproductorder", getAllProductOrder);
 
 //pdf generator -- enquiry
 route.post("/enquiry/genenquiry", pdfgen);

@@ -12,7 +12,7 @@ import Vendor from "../model/VendorModal.js";
 
 const pdfgen = async (req, res) => {
   try {
-    console.log(__dirname, req.body);
+    console.log(__dirname, req.body, req.body.enquiryInfo.itemList);
     var itemList = req.body.enquiryInfo.itemList;
 
     if (itemList.length === 0) {
@@ -23,6 +23,7 @@ const pdfgen = async (req, res) => {
         path.join(__dirname, "/routes/views", "/genpdf.ejs"),
         {
           itemList: itemList,
+          EnquiryData: req.body.EnquiryInfo,
         },
         (err, data) => {
           if (err) {
@@ -35,18 +36,37 @@ const pdfgen = async (req, res) => {
                   OPENSSL_CONF: "/dev/null",
                 },
               },
-              height: "11.25in",
-              width: "8.5in",
-              header: {
-                height: "20mm",
+              "format": "A4",        
+              "orientation": "portrait",
+              remarkable: {
+                html: true
+              },              
+              "border": {
+                "top": "0.5in",         
+                "right": "0.7in",
+                "bottom": "1.5in",
+                "left": "0.7in"
               },
-              footer: {
-                height: "20mm",
+              paginationOffset: 1,
+              "header": {
+                "height": "10mm",
+                // "contents": '<h2 style="text-align: center;">AEGIS PROJECTS TECHNOLOGY PVT. LTD</h2>'
               },
+              "footer": {
+                "height": "10mm",
+                "contents": 
+                `<hr/> <small style="text-align: justify; color: blue">
+                Office: Office No 01, Swami Samarth Building, Opp. Sangrila Biscuits Company, Next to Kala Udyog, 
+                LBS MARG, Bhandup (west), Mumbai – 400078, Maharashtra (INDIA) <br/>
+                Tel: 022 25663611 | 022 25663612 Fax: 022 25663613 <br/>
+                Email: projects@aegisptech.com, &nbsp;
+                Website: www.aegisptech.com <br/>
+                </small>`
+              }
             };
             pdf
               .create(data, options)
-              .toFile("./enquiryPdf/enquiry.pdf", function (err, data) {
+              .toFile("./pdf/enquirypdf.pdf", function (err, data) {
                 if (err) {
                   console.log("2", err);
                   res.status(500).send(err);
@@ -96,8 +116,8 @@ const sendMail = async (req, res) => {
       text: bodyMsg,
       attachments: [
         {
-          filename: "enquiry.pdf", // <= Here: made sure file name match
-          path: path.join(__dirname, "/enquiryPdf/enquiry.pdf"), // <= Here
+          filename: "enquirypdf.pdf", // <= Here: made sure file name match
+          path: path.join(__dirname, "/pdf/enquirypdf.pdf"), // <= Here
           contentType: "application/pdf",
         },
       ],

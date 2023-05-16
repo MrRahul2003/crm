@@ -6,19 +6,32 @@ const __dirname = path.resolve();
 import pdf from "html-pdf";
 import ejs from "ejs";
 import nodemailer from "nodemailer";
+import ProductOrder from "../model/ProductOrderModal.js";
 
 const pdfgenProduct = async (req, res) => {
   try {
     console.log(__dirname, req.body);
     var itemList = req.body.itemList;
+    var total_cost = 0;
+
+    itemList.forEach(element => {
+      total_cost = parseInt(total_cost) + parseInt(element.item_total_price);     
+      console.log(total_cost+"\n");
+    });
 
     if (itemList.length === 0) {
       res.status(500).send("no itemList found");
     } else {
+      var logoSrc = path.join('file://', __dirname, '/img/logo.jpeg');
+      console.log(logoSrc);
       ejs.renderFile(
         path.join(__dirname, "/routes/views", "/genpdfProduct.ejs"),
         {
           itemList: itemList,
+          contactData: req.body.contactDetails,
+          refno: req.body.uuid_id,
+          logo: logoSrc,
+          total_cost: total_cost,
         },
         (err, data) => {
           if (err) {
@@ -30,18 +43,37 @@ const pdfgenProduct = async (req, res) => {
                   OPENSSL_CONF: "/dev/null",
                 },
               },
-              height: "11.25in",
-              width: "8.5in",
-              header: {
-                height: "20mm",
+              "format": "A4",        
+              "orientation": "portrait",
+              remarkable: {
+                html: true
+              },              
+              "border": {
+                "top": "0.5in",         
+                "right": "0.7in",
+                "bottom": "1.5in",
+                "left": "0.7in"
               },
-              footer: {
-                height: "20mm",
+              paginationOffset: 1,
+              "header": {
+                "height": "10mm",
+                // "contents": '<h2 style="text-align: center;">AEGIS PROJECTS TECHNOLOGY PVT. LTD</h2>'
               },
+              "footer": {
+                "height": "10mm",
+                "contents": 
+                `<hr/> <small style="text-align: justify; color: blue">
+                Office: Office No 01, Swami Samarth Building, Opp. Sangrila Biscuits Company, Next to Kala Udyog, 
+                LBS MARG, Bhandup (west), Mumbai – 400078, Maharashtra (INDIA) <br/>
+                Tel: 022 25663611 | 022 25663612 Fax: 022 25663613 <br/>
+                Email: projects@aegisptech.com, &nbsp;
+                Website: www.aegisptech.com <br/>
+                </small>`
+              }
             };
             pdf
               .create(data, options)
-              .toFile("./productPdf/product.pdf", function (err, data) {
+              .toFile("./pdf/productpdf.pdf", function (err, data) {
                 if (err) {
                   res.status(500).send(err);
                 } else {
@@ -83,7 +115,7 @@ const sendMailProduct = async (req, res) => {
       attachments: [
         {
           filename: "product.pdf", // <= Here: made sure file name match
-          path: path.join(__dirname, "/productPdf/product.pdf"), // <= Here
+          path: path.join(__dirname, "/pdf/productpdf.pdf"), // <= Here
           contentType: "application/pdf",
         },
       ],
@@ -102,4 +134,36 @@ const sendMailProduct = async (req, res) => {
   }
 };
 
-export { pdfgenProduct, sendMailProduct };
+const addProductOrder = async (req, res) => {
+  try {
+    const employee_id = req.body.employee_id;
+    const employee_email = req.body.employee_email;
+
+    console.log("addProductOrder", req.body);
+
+    const newProductOrder = new ProductOrder(req.body);
+    await newProductOrder.save();
+
+    return res.status(200).json(newProductOrder);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json(error.message);
+  }
+};
+
+const getAllProductOrder = async (req, res) => {
+  try {
+    const employee_id = req.body.employee_id;
+    const employee_email = req.body.employee_email;
+
+    const allProductOrder = await ProductOrder.find({
+      employee_id: employee_id,
+      employee_email: employee_email,
+    });
+    return res.status(200).json(allProductOrder);
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+};
+
+export { pdfgenProduct, sendMailProduct, addProductOrder, getAllProductOrder };
