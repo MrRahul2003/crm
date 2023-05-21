@@ -43,9 +43,9 @@ const pdfgen = async (req, res) => {
               },              
               "border": {
                 "top": "0.5in",         
-                "right": "0.7in",
+                "right": "0.3in",
                 "bottom": "1.5in",
-                "left": "0.7in"
+                "left": "0.3in"
               },
               paginationOffset: 1,
               "header": {
