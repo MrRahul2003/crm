@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pdf </title>
+    <title>Customer Quotation pdf </title>
     <link rel="shortcut icon" href="/logo.jpeg" />
 
     <link
@@ -28,19 +28,13 @@
     <link rel="stylesheet" href="../../../client/public/assets/plugins/fontawesome/css/all.min.css" />
 
     <link rel="stylesheet" href="../../../client/public/assets/css/style.css" />
-      <style>
-        /* table td {  
-        font-size:small;  
-        border-bottom: none;  
-        border: 2px solid black;
-        }  
-
-        table th {  
-        font-size:small;  
-        border-bottom: none;  
-        border: 2px solid black;
-      }   */
-      </style>
+    <style type="text/css">
+      td {
+        border: solid 2px black;
+        margin: 3px;
+        padding: 3px;
+      }
+    </style>
   </head>
 <body>
   
@@ -50,22 +44,42 @@
         <div className="row justify-content-center">
           <div className="col-xl-6 mx-4">
             <div className="card invoice-info-card">
-              <div className="card-body">
+              <div className="card-body" 
+              style="
+                    width: 185mm;
+                    height: 270mm;
+                    margin: 0;
+                    padding: 3mm;
+                    background-color: white;
+                    border: 1px solid black;
+                  ">
                 <div className="invoice-item invoice-item-one">
                   <div className="row">
-                    <div className="col-md-10">
+                    <div className="col-md-12">
                       <div className="invoice-logo">
-                        <img src= "https://shiny-boba-eed724.netlify.app/logo.jpeg" alt="logo" />
-                      </div>
-                      <div className="invoice-head">
-                        <h2>AEGIS PROJECTS TECHNOLOGY PVT. LTD</h2>
-                        <p>Reference No : - AEGIS/CUSTOMERQUOTATION/<%= refno %>
-                        <br>
-                        Date : - <%= new Date().toLocaleString() %></p>
+                        <img
+                          src="http://management12.netlify.app/logo.jpeg"
+                          width="120"
+                          height="120"
+                          alt="Image"
+                          style="vertical-align: middle"
+                        />
+                        <h2
+                          style="
+                            display: inline-block;
+                            color: rgb(32, 91, 229);
+                          "
+                        >
+                          AEGIS PROJECTS TECHNOLOGY PVT. LTD
+                        </h2>
+                        <p>Date : - <%= new Date().toLocaleString() %></p>
+                        <p>Reference No : - AEGIS/CQ/<%= refno %></p>
                       </div>
                     </div>
                   </div>
                 </div>
+                <hr />
+
                 <div className="invoice-item invoice-item-two">
                   <div className="row">
                     <div className="col-md-10">
@@ -92,11 +106,8 @@
                   <div className="row">
                     <div className="col-md-12">
                       <div className="invoice-info">
-                        <strong className="customer-text-one">
-                          KIND ATTN: - <%= contactData.contact_name %>
-                        </strong>
                         <p className="invoice-details invoice-details-two">
-                          Dear Sir <br />
+                          Dear Sir, <br />
                           This refers to your email enquiry on dated 24TH
                           MARCH 2023, regarding your requirement Compressor
                           Spares Parts/Oil.
@@ -121,13 +132,15 @@
                           TECH- DIRECTOR <br>
                           CELL NO - +919820229458 <br>
                           E mail ID :- badrinath.naikwadi@megafine.in <br>
-                          <hr />
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
                 <br />
+                <!-- --------------------pg 1 ends-------------------------- -->
+              </div>
+              <div>                
                 <div className="invoice-item invoice-table-wrap" >
                   <div className="row">
                     <div className="col-md-12">
@@ -135,20 +148,26 @@
                         <strong className="customer-text-one">
                           A. OFFER ITEMS
                         </strong>
-                        <table className="table table-bordered">
+                        <br><br>
+                        <table                        
+                        className="mb-0"
+                        style="
+                          border: 2px solid black;
+                          border-collapse: collapse;
+                        ">
                           <thead>
                             <tr>
-                              <th>Make</th>
-                              <th>Modal No</th>
-                              <th>Part Name</th>
-                              <th>Part No</th>
-                              <th>HSN Code</th>
-                              <th>Unit Price</th>
-                              <th>Quantity</th>
-                              <th>IGST</th>
-                              <th>CGST</th>
-                              <th>SGST</th>
-                              <th>Total Price</th>
+                              <td> <strong> Make  </strong>  </td>
+                              <td> <strong> Modal No  </strong>  </td>
+                              <td> <strong> Part Name  </strong>  </td>
+                              <td> <strong>  Part No </strong>  </td>
+                              <td> <strong> HSN Code  </strong>  </td>
+                              <td> <strong> Unit Price  </strong>  </td>
+                              <td> <strong>  Quantity </strong>  </td>
+                              <td> <strong>  IGST </strong>  </td>
+                              <td> <strong> CGST  </strong>  </td>
+                              <td> <strong>  SGST </strong>  </td>
+                              <td> <strong>  Total Price  </strong> </td>
                             </tr>
                           </thead>
                           <% if(itemList.length >0){ %>
@@ -217,7 +236,9 @@
                     </div>
                   </div>
                 </div>
-
+                <!-- --------------------pg 2 ends-------------------------- -->
+              </div>
+              <div>
                 <!-- {/* -----------------------------isko change mat karo--------------------------- */} -->
                 <div className="invoice-item invoice-table-wrap"  style="page-break-after: always;">
                   <div className="row">
@@ -280,6 +301,8 @@
                   </div>
                 </div>
                 <!-- {/* ----------------------------------------------------------------------------- */} -->
+              </div>
+              <div>
                 <!-- {/* -----------------------------isko change mat karo--------------------------- */} -->
                 <div className="invoice-item invoice-table-wrap"  style="page-break-after: always;">
                   <div className="row">
@@ -287,7 +310,7 @@
                       <div className="table-responsive">
                         <strong className="customer-text-one">
                           C. PARTY MASTER FORM
-                        </strong>
+                        </strong><br>
                         CIN NO. : U74999MH2008PTC186812
                         <p className="invoice-name">
                           Dear Sir, <br />
@@ -440,6 +463,7 @@
                   </div>
                 </div>
                 <!-- {/* ----------------------------------------------------------------------------- */} -->
+              </div>
               </div>
             </div>
           </div>

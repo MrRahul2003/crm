@@ -42,27 +42,11 @@ const pdfgen = async (req, res) => {
                 html: true
               },              
               "border": {
-                "top": "0.5in",         
+                "top": "0.3in",         
                 "right": "0.3in",
-                "bottom": "1.5in",
+                "bottom": "0.3in",
                 "left": "0.3in"
               },
-              paginationOffset: 1,
-              "header": {
-                "height": "10mm",
-                // "contents": '<h2 style="text-align: center;">AEGIS PROJECTS TECHNOLOGY PVT. LTD</h2>'
-              },
-              "footer": {
-                "height": "10mm",
-                "contents": 
-                `<hr/> <small style="text-align: justify; color: blue">
-                Office: Office No 01, Swami Samarth Building, Opp. Sangrila Biscuits Company, Next to Kala Udyog, 
-                LBS MARG, Bhandup (west), Mumbai – 400078, Maharashtra (INDIA) <br/>
-                Tel: 022 25663611 | 022 25663612 Fax: 022 25663613 <br/>
-                Email: projects@aegisptech.com, &nbsp;
-                Website: www.aegisptech.com <br/>
-                </small>`
-              }
             };
             pdf
               .create(data, options)

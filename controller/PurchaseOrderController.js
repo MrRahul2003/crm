@@ -8,6 +8,7 @@ import ejs from "ejs";
 import nodemailer from "nodemailer";
 
 import PurchaseOrder from "../model/PurchaseOrderModal.js";
+import VendorBill from "../model/VendorBill.js";
 
 const purchaseordergen = async (req, res) => {
   try {
@@ -15,16 +16,16 @@ const purchaseordergen = async (req, res) => {
     var itemList = req.body.itemList;
     var total_cost = 0;
 
-    itemList.forEach(element => {
-      total_cost = parseInt(total_cost) + parseInt(element.item_total_price);     
-      console.log(total_cost+"\n");
+    itemList.forEach((element) => {
+      total_cost = parseInt(total_cost) + parseInt(element.item_total_price);
+      console.log(total_cost + "\n");
     });
 
     if (itemList.length === 0) {
       res.status(500).send("no itemList found");
     } else {
       console.log("fhdas");
-      var logoSrc = path.join('file://', __dirname, '/img/logo.jpeg');
+      var logoSrc = path.join("file://", __dirname, "/img/logo.jpeg");
       console.log(logoSrc);
       ejs.renderFile(
         path.join(__dirname, "/routes/views", "/genpurchaseorderpdf.ejs"),
@@ -46,48 +47,29 @@ const purchaseordergen = async (req, res) => {
                 env: {
                   OPENSSL_CONF: "/dev/null",
                 },
-              },              
-              "format": "A4",        
-              "orientation": "portrait",
+              },
+              format: "A4",
+              orientation: "portrait",
               remarkable: {
-                html: true
-              },              
-              "border": {
-                "top": "0.5in",         
-                "right": "0.3in",
-                "bottom": "1.5in",
-                "left": "0.3in"
+                html: true,
               },
-              paginationOffset: 1,
-              "header": {
-                "height": "10mm",
-                // "contents": '<h2 style="text-align: center;">AEGIS PROJECTS TECHNOLOGY PVT. LTD</h2>'
+              border: {
+                top: "0.3in",
+                right: "0.3in",
+                bottom: "0.3in",
+                left: "0.3in",
               },
-              "footer": {
-                "height": "10mm",
-                "contents": 
-                `<hr/> <small style="text-align: justify; color: blue">
-                Office: Office No 01, Swami Samarth Building, Opp. Sangrila Biscuits Company, Next to Kala Udyog, 
-                LBS MARG, Bhandup (west), Mumbai – 400078, Maharashtra (INDIA) <br/>
-                Tel: 022 25663611 | 022 25663612 Fax: 022 25663613 <br/>
-                Email: projects@aegisptech.com, &nbsp;
-                Website: www.aegisptech.com <br/>
-                </small>`
-              }
             };
             pdf
               .create(data, options)
-              .toFile(
-                "./pdf/purchaseorderpdf.pdf",
-                function (err, data) {
-                  if (err) {
-                    res.status(500).send(err);
-                  } else {
-                    console.log("file created successfully");
-                    res.status(200).send("File created successfully");
-                  }
+              .toFile("./pdf/purchaseorderpdf.pdf", function (err, data) {
+                if (err) {
+                  res.status(500).send(err);
+                } else {
+                  console.log("file created successfully");
+                  res.status(200).send("File created successfully");
                 }
-              );
+              });
           }
         }
       );
@@ -173,9 +155,70 @@ const getAllPurchaseOrder = async (req, res) => {
   }
 };
 
+const addVendorBill = async (req, res) => {
+  try {
+    console.log("addVendorBill", req.body.employee_email, req.file);
+
+    const resume = req.file === undefined ? "" : req.file.filename;
+    console.log(resume);
+
+    const data = {
+      employee_id: req.body.employee_id,
+      employee_email: req.body.employee_email,
+
+      uuid_id: req.body.uuid_id,
+      quotation_id: req.body.quotation_id,
+      enquiry_id: req.body.enquiry_id,
+      vendor_id: req.body.vendor_id,
+      vendorbill_addingdate: req.body.vendorbill_addingdate,
+      billName: req.file.filename,
+    };
+
+    const newVendorBill = new VendorBill(data);
+    await newVendorBill.save();
+
+    return res.status(200).json(newVendorBill);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json(error.message);
+  }
+};
+
+const getVendorBill = async (req, res) => {
+  try {
+    console.log(req.body);
+    const employee_id = req.body.employee_id;
+    const employee_email = req.body.employee_email;
+    const quotation_id = req.body.quotation_id;
+
+    const bill = await VendorBill.find({
+      employee_id: employee_id,
+      employee_email: employee_email,
+      quotation_id: quotation_id,
+    });
+    return res.status(200).json(bill);
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+};
+
+const downloadVendorBill = async (req, res) => {
+  try {
+    console.log("download bill", req.body);
+    var filename = req.body.data.uuid_id + req.body.data.billName;
+    
+    return res.status(200).download(`../VendorBill/vendorbill/${filename}`);
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+};
+
 export {
   sendPurchaseorderMail,
   purchaseordergen,
   addPurchaseOrder,
   getAllPurchaseOrder,
+  addVendorBill,
+  getVendorBill,
+  downloadVendorBill,
 };

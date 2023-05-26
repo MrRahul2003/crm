@@ -5,6 +5,9 @@ const router = express.Router();
 import cookieParser from "cookie-parser";
 router.use(cookieParser());
 
+// middleware
+import { storage, upload } from "../middleware/BillMiddleware.js";
+
 // controllers
 import {
   addCompany,
@@ -37,7 +40,7 @@ import {
   getProduct,
   getAllProduct,
   deleteProduct,
-  editProduct
+  editProduct,
 } from "../controller/ProductController.js";
 import {
   addSubProduct,
@@ -72,8 +75,23 @@ import {
   deleteQuotation,
   editQuotation,
 } from "../controller/QuotationController.js";
-import { addPurchaseOrder, getAllPurchaseOrder, purchaseordergen, sendPurchaseorderMail } from "../controller/PurchaseOrderController.js";
-import { addProductOrder, getAllProductOrder, pdfgenProduct, sendMailProduct } from "../controller/ProductOrderController.js";
+
+import {
+  addPurchaseOrder,
+  addVendorBill,
+  downloadVendorBill,
+  getAllPurchaseOrder,
+  getVendorBill,
+  purchaseordergen,
+  sendPurchaseorderMail,
+} from "../controller/PurchaseOrderController.js";
+import {
+  addProductOrder,
+  getAllProductOrder,
+  getEnquiryProductOrder,
+  pdfgenProduct,
+  sendMailProduct,
+} from "../controller/ProductOrderController.js";
 
 const route = express.Router();
 
@@ -153,6 +171,7 @@ route.post("/purchaseorder/getallpurchaseorder", getAllPurchaseOrder);
 // product order
 route.post("/productorder/addproductorder", addProductOrder);
 route.post("/productorder/getallproductorder", getAllProductOrder);
+route.post("/productorder/getproductorder", getEnquiryProductOrder);
 
 //pdf generator -- enquiry
 route.post("/enquiry/genenquiry", pdfgen);
@@ -161,6 +180,13 @@ route.post("/enquiry/sendenquiry", sendMail);
 //pdf generator -- purchaseorder
 route.post("/purchaseorder/genpurchaseorder", purchaseordergen);
 route.post("/purchaseorder/sendpurchaseorder", sendPurchaseorderMail);
+route.post(
+  "/purchaseorder/addvendorbill",
+  upload.single(["Bill"]),
+  addVendorBill
+);
+route.post("/purchaseorder/getvendorbill", getVendorBill);
+route.post("/purchaseorder/downloadvendorbill", downloadVendorBill);
 
 //pdf generator -- productorder
 route.post("/productorder/genproductorder", pdfgenProduct);

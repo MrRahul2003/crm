@@ -49,27 +49,11 @@ const pdfgenProduct = async (req, res) => {
                 html: true
               },              
               "border": {
-                "top": "0.5in",         
+                "top": "0.3in",         
                 "right": "0.3in",
-                "bottom": "1.5in",
-                "left": "0.3in"
+                "bottom": "0.3in",
+                "left": "0.3in",
               },
-              paginationOffset: 1,
-              "header": {
-                "height": "10mm",
-                // "contents": '<h2 style="text-align: center;">AEGIS PROJECTS TECHNOLOGY PVT. LTD</h2>'
-              },
-              "footer": {
-                "height": "10mm",
-                "contents": 
-                `<hr/> <small style="text-align: justify; color: blue">
-                Office: Office No 01, Swami Samarth Building, Opp. Sangrila Biscuits Company, Next to Kala Udyog, 
-                LBS MARG, Bhandup (west), Mumbai – 400078, Maharashtra (INDIA) <br/>
-                Tel: 022 25663611 | 022 25663612 Fax: 022 25663613 <br/>
-                Email: projects@aegisptech.com, &nbsp;
-                Website: www.aegisptech.com <br/>
-                </small>`
-              }
             };
             pdf
               .create(data, options)
@@ -166,4 +150,24 @@ const getAllProductOrder = async (req, res) => {
   }
 };
 
-export { pdfgenProduct, sendMailProduct, addProductOrder, getAllProductOrder };
+const getEnquiryProductOrder = async (req, res) => {
+  try {
+
+    console.log("products data", req.body);
+
+    const employee_id = req.body.employee_id;
+    const employee_email = req.body.employee_email;
+    const enquiry_id = req.body.enquiry_id;
+
+    const allProductOrder = await ProductOrder.find({
+      employee_id: employee_id,
+      employee_email: employee_email,
+      enquiry_id: enquiry_id,
+    });
+    return res.status(200).json(allProductOrder);
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+};
+
+export { pdfgenProduct, sendMailProduct, addProductOrder, getAllProductOrder, getEnquiryProductOrder };
