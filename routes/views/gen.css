@@ -1,3 +1,8 @@
+td {
+  border: solid 2px black;
+  margin: 3px;
+  padding: 3px;
+}
 html {
   zoom: 0.55;
-  }
+}
