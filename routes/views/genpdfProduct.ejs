@@ -56,7 +56,8 @@
                     padding: 3mm;
                     background-color: white;
                     border: 1px solid black;
-                    zoom: 0.98;
+                    page-break-after: always;
+                    zoom: 0.90;
                   ">
                 <div className="invoice-item invoice-item-one">
                   <div className="row">
@@ -107,7 +108,7 @@
                   </div>
                 </div>
 
-                <div className="invoice-item invoice-item-two"  style="page-break-after: always;">
+                <div className="invoice-item invoice-item-two">
                   <div className="row">
                     <div className="col-md-12">
                       <div className="invoice-info">
@@ -257,32 +258,27 @@
                             <tr>
                               <td>01</td>
                               <td>PACKING CHARGE </td>
-                              <td>@ 3%</td>
+                              <td><%= packing_charge %></td>
                             </tr>
                             <tr>
                               <td>02</td>
                               <td>TRANSPORT CHARGES </td>
-                              <td>ON PARTIES ACCOUNT</td>
-                            </tr>
-                            <tr>
-                              <td>03</td>
-                              <td>GST </td>
-                              <td>@ 18%</td>
+                              <td><%= transport_charge %></td>
                             </tr>
                             <tr>
                               <td>04</td>
                               <td>PAYMENTS TERMS </td>
-                              <td>AGAINST PROFORMA INVOICE</td>
+                              <td><%= payment_terms %></td>
                             </tr>
                             <tr>
                               <td>05</td>
                               <td>DELIVERY </td>
-                              <td>READY STOCK</td>
+                              <td><%= delivery %></td>
                             </tr>
                             <tr>
                               <td>06</td>
                               <td>OFFER VALIDITY </td>
-                              <td>7 DAYS FROM ISSUE</td>
+                              <td><%= offer_validity %></td>
                             </tr>
                           </tbody>
                         </table>

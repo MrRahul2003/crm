@@ -32,6 +32,13 @@ const pdfgenProduct = async (req, res) => {
           refno: req.body.uuid_id,
           logo: logoSrc,
           total_cost: total_cost,
+
+          packing_charge : req.body.packing_charge,
+          transport_charge : req.body.transport_charge,
+          payment_terms : req.body.payment_terms,
+          delivery : req.body.delivery,
+          offer_validity : req.body.offer_validity,
+
         },
         (err, data) => {
           if (err) {
