@@ -16,8 +16,7 @@ const pdfgen = async (req, res) => {
     var itemList = req.body.enquiryInfo.itemList;
 
     const browser = await puppeteer.launch({
-      executablePath: '/usr/bin/chromium-browser',
-      ignoreDefaultArgs: ['--disable-extensions']
+      args: ["--no-sandbox", "--disabled-setupid-sandbox"],
   });
     const [page] = await browser.pages();
     const filePathName = path.join(__dirname, "/routes/views", "/genpdf.ejs");
