@@ -92,6 +92,11 @@ import {
   pdfgenProduct,
   sendMailProduct,
 } from "../controller/ProductOrderController.js";
+import {
+  addPaymentPurchaseOrder,
+  getPaymentPurchaseOrder,
+} from "../controller/PurchaseOrderpayment.js";
+import { addPaymentProductOrder, getPaymentProductOrder } from "../controller/ProductOrderPayment.js";
 
 const route = express.Router();
 
@@ -168,10 +173,18 @@ route.post("/quotation/deletequotation", deleteQuotation);
 route.post("/purchaseorder/addpurchaseorder", addPurchaseOrder);
 route.post("/purchaseorder/getallpurchaseorder", getAllPurchaseOrder);
 
+// purchase order payment
+route.post("/purchaseorder/addpayment", addPaymentPurchaseOrder);
+route.post("/purchaseorder/getpayment", getPaymentPurchaseOrder);
+
 // product order
 route.post("/productorder/addproductorder", addProductOrder);
 route.post("/productorder/getallproductorder", getAllProductOrder);
 route.post("/productorder/getproductorder", getEnquiryProductOrder);
+
+// product order payment
+route.post("/productorder/addpayment", addPaymentProductOrder);
+route.post("/productorder/getpayment", getPaymentProductOrder);
 
 //pdf generator -- enquiry
 route.post("/enquiry/genenquiry", pdfgen);
