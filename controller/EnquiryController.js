@@ -16,8 +16,10 @@ const pdfgen = async (req, res) => {
     var itemList = req.body.enquiryInfo.itemList;
 
     const browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disabled-setupid-sandbox"],
-  });
+      executablePath: "/usr/bin/chromium-browser",
+
+      ignoreDefaultArgs: ["--disable-extensions"],
+    });
     const [page] = await browser.pages();
     const filePathName = path.join(__dirname, "/routes/views", "/genpdf.ejs");
 
@@ -33,17 +35,17 @@ const pdfgen = async (req, res) => {
       format: "A4",
       printBackground: true,
       margin: {
-        "top": "0.3in",         
-        "right": "0.3in",
-        "bottom": "0.3in",
-        "left": "0.3in"
+        top: "0.3in",
+        right: "0.3in",
+        bottom: "0.3in",
+        left: "0.3in",
       },
     });
     res.contentType("application/pdf");
-    
+
     console.log("file created successfully");
     res.status(200).send("File created successfully");
-    
+
     browser.close();
   } catch (error) {
     console.log(error.message);
