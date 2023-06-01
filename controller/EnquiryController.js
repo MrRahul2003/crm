@@ -15,12 +15,10 @@ const pdfgen = async (req, res) => {
     console.log(__dirname, req.body, req.body.enquiryInfo.itemList);
     var itemList = req.body.enquiryInfo.itemList;
 
-    const browser = await puppeteer.launch({
-      executablePath: "/usr/bin/chromium-browser",
-
-      ignoreDefaultArgs: ["--disable-extensions"],
-    });
+    const browser = await puppeteer.launch({ headless: "new" });
     const [page] = await browser.pages();
+
+    // await page.goto('https://developer.chrome.com/');
     const filePathName = path.join(__dirname, "/routes/views", "/genpdf.ejs");
 
     const html = await ejs.renderFile(filePathName, {
