@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+import puppeteer from 'puppeteer-core';
 
 import path from "path";
 const __dirname = path.resolve();
@@ -15,7 +15,10 @@ const pdfgen = async (req, res) => {
     console.log(__dirname, req.body, req.body.enquiryInfo.itemList);
     var itemList = req.body.enquiryInfo.itemList;
 
-    const browser = await puppeteer.launch({ headless: "new" });
+    const browser = await puppeteer.launch({ headless: "new",'args' : [
+      '--no-sandbox',
+      '--disable-setuid-sandbox'
+    ] });
     const [page] = await browser.pages();
 
     // await page.goto('https://developer.chrome.com/');
