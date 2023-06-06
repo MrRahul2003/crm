@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer';
 
 import path from "path";
 const __dirname = path.resolve();
@@ -15,13 +15,9 @@ const pdfgen = async (req, res) => {
     console.log(__dirname, req.body, req.body.enquiryInfo.itemList);
     var itemList = req.body.enquiryInfo.itemList;
 
-    const browser = await puppeteer.launch({ headless: "new",'args' : [
-      '--no-sandbox',
-      '--disable-setuid-sandbox'
-    ] });
-    const [page] = await browser.pages();
+    const browser = await puppeteer.launch({ headless: "new" })
+    const page = await browser.newPage()
 
-    // await page.goto('https://developer.chrome.com/');
     const filePathName = path.join(__dirname, "/routes/views", "/genpdf.ejs");
 
     const html = await ejs.renderFile(filePathName, {
@@ -32,6 +28,7 @@ const pdfgen = async (req, res) => {
 
     // create a new pdf document
     const pdf = await page.pdf({
+      printBackground: true,
       path: "./pdf/enquirypdf.pdf",
       format: "A4",
       printBackground: true,
