@@ -1,4 +1,4 @@
-"use strict";
+import puppeteer from "puppeteer";
 
 import path from "path";
 const __dirname = path.resolve();
@@ -27,52 +27,49 @@ const purchaseordergen = async (req, res) => {
       console.log("fhdas");
       var logoSrc = path.join("file://", __dirname, "/img/logo.jpeg");
       console.log(logoSrc);
-      ejs.renderFile(
-        path.join(__dirname, "/routes/views", "/genpurchaseorderpdf.ejs"),
-        {
-          itemList: itemList,
-          vendorData: req.body.vendorData,
-          refno: req.body.uuid_id,
-          logo: logoSrc,
-          total_cost: total_cost,
-          vendor_name: req.body.vendor_name,
-          vendor_email: req.body.vendor_email,
-        },
-        (err, data) => {
-          if (err) {
-            res.status(500).send(err);
-          } else {
-            let options = {
-              childProcessOptions: {
-                env: {
-                  OPENSSL_CONF: "/dev/null",
-                },
-              },
-              format: "A4",
-              orientation: "portrait",
-              remarkable: {
-                html: true,
-              },
-              border: {
-                top: "0.3in",
-                right: "0.3in",
-                bottom: "0.3in",
-                left: "0.3in",
-              },
-            };
-            pdf
-              .create(data, options)
-              .toFile("./pdf/purchaseorderpdf.pdf", function (err, data) {
-                if (err) {
-                  res.status(500).send(err);
-                } else {
-                  console.log("file created successfully");
-                  res.status(200).send("File created successfully");
-                }
-              });
-          }
-        }
+
+      const browser = await puppeteer.launch({
+        userDataDir: "/tmp/user-data-dir",
+        headless: true,
+        args: ["--no-sandbox"],
+      });
+      const page = await browser.newPage();
+
+      const filePathName = path.join(
+        __dirname,
+        "/routes/views",
+        "/genpurchaseorderpdf.ejs"
       );
+
+      const html = await ejs.renderFile(filePathName, {
+        itemList: itemList,
+        vendorData: req.body.vendorData,
+        refno: req.body.uuid_id,
+        logo: logoSrc,
+        total_cost: total_cost,
+        vendor_name: req.body.vendor_name,
+        vendor_email: req.body.vendor_email,
+      });
+      await page.setContent(html);
+
+      // create a new pdf document
+      const pdf = await page.pdf({
+        path: "./pdf/purchaseorderpdf.pdf",
+        format: "A4",
+        printBackground: true,
+        margin: {
+          top: "0.3in",
+          right: "0.3in",
+          bottom: "0.3in",
+          left: "0.3in",
+        },
+      });
+      res.contentType("application/pdf");
+
+      console.log("file created successfully");
+      res.status(200).send("File created successfully");
+
+      browser.close();
     }
   } catch (error) {
     console.log(error.message);
@@ -206,7 +203,7 @@ const downloadVendorBill = async (req, res) => {
   try {
     console.log("download bill", req.body);
     var filename = req.body.data.uuid_id + req.body.data.billName;
-    
+
     return res.status(200).download(`../VendorBill/vendorbill/${filename}`);
   } catch (error) {
     return res.status(500).json(error.message);

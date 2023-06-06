@@ -100,3 +100,6 @@ const pdfgen = async (req, res) => {
     return res.status(500).json(error.message);
   }
 };
+
+
+npm i -S puppeteer@2.1.1

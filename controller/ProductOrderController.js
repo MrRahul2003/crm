@@ -1,4 +1,4 @@
-// "use strict";
+import puppeteer from "puppeteer";
 
 import path from "path";
 const __dirname = path.resolve();
@@ -14,67 +14,64 @@ const pdfgenProduct = async (req, res) => {
     var itemList = req.body.itemList;
     var total_cost = 0;
 
-    itemList.forEach(element => {
-      total_cost = parseInt(total_cost) + parseInt(element.item_total_price);     
-      console.log(total_cost+"\n");
+    itemList.forEach((element) => {
+      total_cost = parseInt(total_cost) + parseInt(element.item_total_price);
+      console.log(total_cost + "\n");
     });
 
     if (itemList.length === 0) {
       res.status(500).send("no itemList found");
     } else {
-      var logoSrc = path.join('file://', __dirname, '/img/logo.jpeg');
+      var logoSrc = path.join("file://", __dirname, "/img/logo.jpeg");
       console.log(logoSrc);
-      ejs.renderFile(
-        path.join(__dirname, "/routes/views", "/genpdfProduct.ejs"),
-        {
-          itemList: itemList,
-          contactData: req.body.contactDetails,
-          refno: req.body.uuid_id,
-          logo: logoSrc,
-          total_cost: total_cost,
 
-          packing_charge : req.body.packing_charge,
-          transport_charge : req.body.transport_charge,
-          payment_terms : req.body.payment_terms,
-          delivery : req.body.delivery,
-          offer_validity : req.body.offer_validity,
+      const browser = await puppeteer.launch({
+        userDataDir: "/tmp/user-data-dir",
+        headless: true,
+        args: ["--no-sandbox"],
+      });
+      const page = await browser.newPage();
 
-        },
-        (err, data) => {
-          if (err) {
-            res.status(500).send(err);
-          } else {
-            let options = {
-              childProcessOptions: {
-                env: {
-                  OPENSSL_CONF: "/dev/null",
-                },
-              },
-              "format": "A4",        
-              "orientation": "portrait",
-              remarkable: {
-                html: true
-              },              
-              "border": {
-                "top": "0.3in",         
-                "right": "0.3in",
-                "bottom": "0.3in",
-                "left": "0.3in",
-              },
-            };
-            pdf
-              .create(data, options)
-              .toFile("./pdf/productpdf.pdf", function (err, data) {
-                if (err) {
-                  res.status(500).send(err);
-                } else {
-                  console.log("file created successfully");
-                  res.status(200).send("File created successfully");
-                }
-              });
-          }
-        }
+      const filePathName = path.join(
+        __dirname,
+        "/routes/views",
+        "/genpdfProduct.ejs"
       );
+
+      const html = await ejs.renderFile(filePathName, {
+        itemList: itemList,
+        contactData: req.body.contactDetails,
+        refno: req.body.uuid_id,
+        logo: logoSrc,
+        total_cost: total_cost,
+
+        packing_charge: req.body.packing_charge,
+        transport_charge: req.body.transport_charge,
+        payment_terms: req.body.payment_terms,
+        delivery: req.body.delivery,
+        offer_validity: req.body.offer_validity,
+      });
+      await page.setContent(html);
+
+      // create a new pdf document
+      const pdf = await page.pdf({
+        printBackground: true,
+        path: "./pdf/productpdf.pdf",
+        format: "A4",
+        printBackground: true,
+        margin: {
+          top: "0.3in",
+          right: "0.3in",
+          bottom: "0.3in",
+          left: "0.3in",
+        },
+      });
+      res.contentType("application/pdf");
+
+      console.log("file created successfully");
+      res.status(200).send("File created successfully");
+
+      browser.close();
     }
   } catch (error) {
     console.log(error.message);
@@ -159,7 +156,6 @@ const getAllProductOrder = async (req, res) => {
 
 const getEnquiryProductOrder = async (req, res) => {
   try {
-
     console.log("products data", req.body);
 
     const employee_id = req.body.employee_id;
@@ -177,4 +173,10 @@ const getEnquiryProductOrder = async (req, res) => {
   }
 };
 
-export { pdfgenProduct, sendMailProduct, addProductOrder, getAllProductOrder, getEnquiryProductOrder };
+export {
+  pdfgenProduct,
+  sendMailProduct,
+  addProductOrder,
+  getAllProductOrder,
+  getEnquiryProductOrder,
+};
