@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import puppeteer from "puppeteer";
 
 import path from "path";
 const __dirname = path.resolve();
@@ -15,8 +15,12 @@ const pdfgen = async (req, res) => {
     console.log(__dirname, req.body, req.body.enquiryInfo.itemList);
     var itemList = req.body.enquiryInfo.itemList;
 
-    const browser = await puppeteer.launch({ headless: "new" })
-    const page = await browser.newPage()
+    const browser = await puppeteer.launch({
+      userDataDir: "/tmp/user-data-dir",
+      headless: true,
+      args: ["--no-sandbox"],
+    });
+    const page = await browser.newPage();
 
     const filePathName = path.join(__dirname, "/routes/views", "/genpdf.ejs");
 
