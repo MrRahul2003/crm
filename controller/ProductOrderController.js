@@ -3,10 +3,14 @@ import puppeteer from "puppeteer";
 import path from "path";
 const __dirname = path.resolve();
 
-import pdf from "html-pdf";
 import ejs from "ejs";
 import nodemailer from "nodemailer";
 import ProductOrder from "../model/ProductOrderModal.js";
+
+import dotenv from "dotenv";
+dotenv.config();
+const watermark = process.env.watermark;
+const logo = process.env.logo;
 
 const pdfgenProduct = async (req, res) => {
   try {
@@ -22,9 +26,6 @@ const pdfgenProduct = async (req, res) => {
     if (itemList.length === 0) {
       res.status(500).send("no itemList found");
     } else {
-      var logoSrc = path.join("file://", __dirname, "/img/logo.jpeg");
-      console.log(logoSrc);
-
       const browser = await puppeteer.launch({
         userDataDir: "/tmp/user-data-dir",
         headless: true,
@@ -37,12 +38,11 @@ const pdfgenProduct = async (req, res) => {
         "/routes/views",
         "/genpdfProduct.ejs"
       );
-
+      console.log(logo);
       const html = await ejs.renderFile(filePathName, {
         itemList: itemList,
         contactData: req.body.contactDetails,
         refno: req.body.uuid_id,
-        logo: logoSrc,
         total_cost: total_cost,
 
         packing_charge: req.body.packing_charge,
@@ -50,6 +50,9 @@ const pdfgenProduct = async (req, res) => {
         payment_terms: req.body.payment_terms,
         delivery: req.body.delivery,
         offer_validity: req.body.offer_validity,
+
+        watermark: watermark,
+        logo: logo,
       });
       await page.setContent(html);
 

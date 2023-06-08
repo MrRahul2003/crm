@@ -3,16 +3,20 @@ import puppeteer from "puppeteer";
 import path from "path";
 const __dirname = path.resolve();
 
-import pdf from "html-pdf";
 import ejs from "ejs";
 import nodemailer from "nodemailer";
 
 import Enquiry from "../model/EnquiryModal.js";
 import Vendor from "../model/VendorModal.js";
 
+import dotenv from "dotenv";
+dotenv.config();
+const watermark = process.env.watermark;
+const logo = process.env.logo;
+
 const pdfgen = async (req, res) => {
   try {
-    console.log(__dirname, req.body, req.body.enquiryInfo.itemList);
+    console.log(__dirname, req.body, req.body.enquiryInfo.itemList, watermark);
     var itemList = req.body.enquiryInfo.itemList;
 
     const browser = await puppeteer.launch({
@@ -27,6 +31,8 @@ const pdfgen = async (req, res) => {
     const html = await ejs.renderFile(filePathName, {
       itemList: itemList,
       EnquiryData: req.body.EnquiryInfo,
+      watermark: watermark,
+      logo: logo
     });
     await page.setContent(html);
 

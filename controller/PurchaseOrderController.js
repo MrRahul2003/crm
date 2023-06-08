@@ -3,12 +3,16 @@ import puppeteer from "puppeteer";
 import path from "path";
 const __dirname = path.resolve();
 
-import pdf from "html-pdf";
 import ejs from "ejs";
 import nodemailer from "nodemailer";
 
 import PurchaseOrder from "../model/PurchaseOrderModal.js";
 import VendorBill from "../model/VendorBill.js";
+
+import dotenv from "dotenv";
+dotenv.config();
+const watermark = process.env.watermark;
+const logo = process.env.logo;
 
 const purchaseordergen = async (req, res) => {
   try {
@@ -24,10 +28,6 @@ const purchaseordergen = async (req, res) => {
     if (itemList.length === 0) {
       res.status(500).send("no itemList found");
     } else {
-      console.log("fhdas");
-      var logoSrc = path.join("file://", __dirname, "/img/logo.jpeg");
-      console.log(logoSrc);
-
       const browser = await puppeteer.launch({
         userDataDir: "/tmp/user-data-dir",
         headless: true,
@@ -40,15 +40,18 @@ const purchaseordergen = async (req, res) => {
         "/routes/views",
         "/genpurchaseorderpdf.ejs"
       );
+      console.log(logo);
 
       const html = await ejs.renderFile(filePathName, {
         itemList: itemList,
         vendorData: req.body.vendorData,
         refno: req.body.uuid_id,
-        logo: logoSrc,
         total_cost: total_cost,
         vendor_name: req.body.vendor_name,
         vendor_email: req.body.vendor_email,
+
+        watermark: watermark,
+        logo: logo,
       });
       await page.setContent(html);
 
@@ -202,9 +205,11 @@ const getVendorBill = async (req, res) => {
 const downloadVendorBill = async (req, res) => {
   try {
     console.log("download bill", req.body);
-    var filename = req.body.data.uuid_id + req.body.data.billName;
+    var filename = req.body.data.billName;
+    var billPath = path.join(__dirname, "/VendorBill/vendorbill/", filename);
+    console.log(billPath);
 
-    return res.status(200).download(`../VendorBill/vendorbill/${filename}`);
+    return res.status(200).download(billPath);
   } catch (error) {
     return res.status(500).json(error.message);
   }

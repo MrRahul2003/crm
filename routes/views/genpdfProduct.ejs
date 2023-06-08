@@ -29,16 +29,22 @@
                     height: 270mm;
                     margin: 0;
                     padding: 3mm;
-                    background-color: white;
                     border: 1px solid black;
                     page-break-after: always;
+
+                    background-image:url('<%= watermark %>');
+                    background-repeat: no-repeat;
+                    background-position-x: center;
+                    background-position-y: 6rem;
+                    background-size: cover;
+                    z-index: -1;
                   ">
                 <div className="invoice-item invoice-item-one">
                   <div className="row">
                     <div className="col-md-12">
                       <div className="invoice-logo">
                         <img
-                          src="http://management12.netlify.app/logo.jpeg"
+                        src="<%= logo %>"
                           width="120"
                           height="120"
                           alt="Image"
