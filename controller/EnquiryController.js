@@ -16,7 +16,7 @@ const logo = process.env.logo;
 
 const pdfgen = async (req, res) => {
   try {
-    console.log(__dirname, req.body, req.body.enquiryInfo.itemList, watermark);
+    console.log(__dirname, req.body, req.body.enquiryInfo.itemList, watermark,logo);
     var itemList = req.body.enquiryInfo.itemList;
 
     const browser = await puppeteer.launch({

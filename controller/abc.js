@@ -103,3 +103,20 @@ const pdfgen = async (req, res) => {
 
 
 npm i -S puppeteer@2.1.1
+
+// ------------------------
+background-image:url('<%= watermark %>');
+background-repeat: no-repeat;
+background-position-x: center;
+background-position-y: 18rem;
+background-size: cover;
+z-index: -1;
+
+
+// ------------------------
+background-image:url('<%= watermark %>');
+background-repeat: no-repeat;
+background-position-x: center;
+background-position-y: 18rem;
+background-size: contain;
+z-index: -1;

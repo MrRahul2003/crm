@@ -11,7 +11,7 @@
       td {
         border: solid 2px black;
         margin: 3px;
-        padding: 3px;
+        padding: 2px;
       }
     </style>
   </head>
@@ -31,13 +31,6 @@
                     padding: 3mm;
                     border: 1px solid black;
                     page-break-after: always;
-
-                    background-image:url('<%= watermark %>');
-                    background-repeat: no-repeat;
-                    background-position-x: center;
-                    background-position-y: 6rem;
-                    background-size: cover;
-                    z-index: -1;
                   ">
                 <div className="invoice-item invoice-item-one">
                   <div className="row">
@@ -126,7 +119,14 @@
                 <br />
                 <!-- --------------------pg 1 ends-------------------------- -->
               </div>
-              <div>                
+              <div style="
+              width: 185mm;
+              height: 270mm;
+              margin: 0;
+              padding: 3mm;
+              border: 1px solid black;
+              page-break-after: always;
+            ">                
                 <div className="invoice-item invoice-table-wrap" >
                   <div className="row">
                     <div className="col-md-12">
@@ -178,7 +178,7 @@
                     </div>
                   </div>
                 </div>
-                <div className="row align-items-center justify-content-center"  style="page-break-after: always;">
+                <div className="row align-items-center justify-content-center" >
                   <div className="col-lg-6 col-md-6">
                     <div className="invoice-total-card">
                       <div className="invoice-total-box">
@@ -223,8 +223,8 @@
                   </div>
                 </div>
                 <!-- --------------------pg 2 ends-------------------------- -->
-              </div>
-              <div>
+                <div>
+                  <br><br>
                 <!-- {/* -----------------------------isko change mat karo--------------------------- */} -->
                 <div className="invoice-item invoice-table-wrap"  style="page-break-after: always;">
                   <div className="row">
@@ -232,7 +232,7 @@
                       <div className="table-responsive">
                         <strong className="customer-text-one">
                           B. COMMERCIAL TERMS & CONDITIONS.
-                        </strong>
+                        </strong> <br> <br>
                         <table className="invoice-table table table-center mb-0">
                           <tbody>
                             <tr>
@@ -282,13 +282,21 @@
                   </div>
                 </div>
                 <!-- {/* ----------------------------------------------------------------------------- */} -->
+                </div>
               </div>
               <div>
                 <!-- {/* -----------------------------isko change mat karo--------------------------- */} -->
                 <div className="invoice-item invoice-table-wrap"  style="page-break-after: always;">
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="table-responsive">
+                      <div className="table-responsive" style="
+                      width: 185mm;
+                      height: 270mm;
+                      margin: 0;
+                      padding: 3mm;
+                      border: 1px solid black;
+                      page-break-after: always;
+                    ">
                         <strong className="customer-text-one">
                           C. PARTY MASTER FORM
                         </strong><br>

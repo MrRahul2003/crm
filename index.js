@@ -21,6 +21,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json( {extended: true} ));
 app.use(bodyParser.urlencoded( {extended: true} ));
+app.use( express.static( "public" ) );
 
 app.use("/public", express.static(path.join(__dirname, "public"))); // use this for image upload
 app.use('/',route);
