@@ -32,6 +32,13 @@
                     padding: 3mm;
                     border: 1px solid black;
                     page-break-after: always;
+
+                    background-image:url('<%= watermark %>');
+                    background-repeat: no-repeat;
+                    background-position-x: center;
+                    background-position-y: 18rem;
+                    background-size: contain;
+                    z-index: -1;
                   ">
                 <div className="invoice-item invoice-item-one">
                   <div className="row">
@@ -127,6 +134,13 @@
               padding: 3mm;
               border: 1px solid black;
               page-break-after: always;
+
+              background-image:url('<%= watermark %>');
+              background-repeat: no-repeat;
+              background-position-x: center;
+              background-position-y: 18rem;
+              background-size: contain;
+              z-index: -1;
             ">                
                 <div className="invoice-item invoice-table-wrap" >
                   <div className="row">
@@ -154,7 +168,7 @@
                               <td> <strong>  IGST </strong>  </td>
                               <td> <strong> CGST  </strong>  </td>
                               <td> <strong>  SGST </strong>  </td>
-                              <td> <strong>  Total Price  </strong> </td>
+                              <td> <strong>  Total </strong> </td>
                             </tr>
                           </thead>
                           <% if(itemList.length >0){ %>
@@ -297,6 +311,13 @@
                       padding: 3mm;
                       border: 1px solid black;
                       page-break-after: always;
+
+                      background-image:url('<%= watermark %>');
+                      background-repeat: no-repeat;
+                      background-position-x: center;
+                      background-position-y: 18rem;
+                      background-size: contain;
+                      z-index: -1;
                     ">
                         <strong className="customer-text-one">
                           C. PARTY MASTER FORM
