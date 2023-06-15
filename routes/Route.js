@@ -87,10 +87,19 @@ import {
 } from "../controller/PurchaseOrderController.js";
 import {
   addProductOrder,
+  addTaxInvoice,
+  deleteTaxInvoice,
+  downloadChallan,
+  downloadTaxInvoice,
   getAllProductOrder,
   getEnquiryProductOrder,
+  getTaxInvoice,
+  pdfgenChallan,
   pdfgenProduct,
+  pdfgenTaxInvoice,
+  sendMailChallan,
   sendMailProduct,
+  sendMailTaxInvoice,
 } from "../controller/ProductOrderController.js";
 import {
   addPaymentPurchaseOrder,
@@ -181,6 +190,9 @@ route.post("/purchaseorder/getpayment", getPaymentPurchaseOrder);
 route.post("/productorder/addproductorder", addProductOrder);
 route.post("/productorder/getallproductorder", getAllProductOrder);
 route.post("/productorder/getproductorder", getEnquiryProductOrder);
+route.post("/productorder/addtaxinvoice", addTaxInvoice);
+route.post("/productorder/gettaxinvoice", getTaxInvoice);
+route.post("/productorder/deletetaxinvoice", deleteTaxInvoice);
 
 // product order payment
 route.post("/productorder/addpayment", addPaymentProductOrder);
@@ -204,5 +216,15 @@ route.post("/purchaseorder/downloadvendorbill", downloadVendorBill);
 //pdf generator -- productorder
 route.post("/productorder/genproductorder", pdfgenProduct);
 route.post("/productorder/sendproductorder", sendMailProduct);
+
+//pdf generator -- Tax invoice -- Challan
+route.post("/productorder/genpdftaxinvoice", pdfgenTaxInvoice);
+route.post("/productorder/sendmailtaxinvoice", sendMailTaxInvoice);
+route.post("/productorder/downloadtaxinvoice", downloadTaxInvoice);
+
+
+route.post("/productorder/genpdfchallan", pdfgenChallan);
+route.post("/productorder/sendmailchallan", sendMailChallan);
+route.post("/productorder/downloadchallan", downloadChallan);
 
 export default route;

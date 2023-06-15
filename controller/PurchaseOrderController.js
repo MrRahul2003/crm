@@ -205,9 +205,9 @@ const getVendorBill = async (req, res) => {
 const downloadVendorBill = async (req, res) => {
   try {
     console.log("download bill", req.body);
-    var filename = req.body.data.billName;
+    var filename = req.body.billName;
     var billPath = path.join(__dirname, "/VendorBill/vendorbill/", filename);
-    console.log(billPath);
+    console.log("file", filename, billPath);
 
     return res.status(200).download(billPath);
   } catch (error) {

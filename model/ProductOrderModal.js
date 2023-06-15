@@ -17,6 +17,9 @@ const ProductOrderSchema = new mongoose.Schema({
   enquiry_id: {
     type: String,
   },  
+  enquiry_addingdate: {
+    type: String,
+  },
   productorder_addingdate: {
     type: String,
   },
@@ -26,6 +29,27 @@ const ProductOrderSchema = new mongoose.Schema({
   lastmodifydate: {
     type: Date,
     default: Date.now,
+  },
+  packing_charge: {
+    type: String,
+  },
+  transport_charge: {
+    type: String,
+  },
+  payment_terms: {
+    type: String,
+  },
+  delivery: {
+    type: String,
+  },
+  offer_validity: {
+    type: String,
+  },
+  gst_value: {
+    type: String,
+  },
+  GstTypeInfo: {
+    type: String,
   },
 });
 

@@ -9,11 +9,14 @@
     <link rel="stylesheet" href="./gen.css">
     <style type="text/css">
       td {
-        border: solid 2px black;
+        border: solid 2px rgb(65, 35, 65);
         margin: 3px;
         padding: 2px;
         word-break:break-all;
       }
+      p {
+      text-indent: 10px;
+    }
     </style>
   </head>
 <body>
@@ -30,7 +33,7 @@
                     height: 270mm;
                     margin: 0;
                     padding: 3mm;
-                    border: 1px solid black;
+                    border: 1px solid rgb(65, 35, 65);
                     page-break-after: always;
 
                     background-image:url('<%= watermark %>');
@@ -59,8 +62,8 @@
                         >
                           AEGIS PROJECTS TECHNOLOGY PVT. LTD
                         </h2>
-                        <p>Date : - <%= new Date().toLocaleString() %></p>
-                        <p>Reference No : - AEGIS/CQ/<%= refno %></p>
+                        <h3>Date : - <%= new Date().toLocaleString() %></h3>
+                        <h3>Reference No : - AEGIS/CQ/<%= refno %></h3>
                       </div>
                     </div>
                   </div>
@@ -72,18 +75,21 @@
                     <div className="col-md-10">
                       <div className="invoice-info">
                         <h3>
-                          <strong className="customer-text-one">
+                          <strong className="customer-text-one" style="
+                          display: inline-block;
+                          color: rgb(81, 10, 168);
+                        ">
                             To, <br>
-                            M/S. <%= contactData.contact_name %>
+                            M/S. <%= contact_name %>
                           </strong>
                         </h3>
-                        <p className="invoice-details invoice-details-two">
+                        <h3 className="invoice-details invoice-details-two">
                           <%= contactData.contact_street %>, <br />
                           <%= contactData.contact_city %>, <%= contactData.contact_code %> <br>
                           <%= contactData.contact_state %> <%= contactData.contact_country %> <br />
                           MOBILE NO : - <%= contactData.contact_phone1 %> <br>
                           E mail ID :- <%= contactData.contact_email %> <br>
-                        </p>
+                        </h3>
                       </div>
                     </div>
                   </div>
@@ -93,10 +99,11 @@
                   <div className="row">
                     <div className="col-md-12">
                       <div className="invoice-info">
-                        <p className="invoice-details invoice-details-two">
+                        <h3 className="invoice-details invoice-details-two"                 
+                        style="color:rgb(63, 27, 114);">
                           Dear Sir, <br />
-                          This refers to your email enquiry on dated 24TH
-                          MARCH 2023, regarding your requirement Compressor
+                          This refers to your email enquiry on dated <%= enquiry_addingdate %>,
+                          regarding your requirement Compressor
                           Spares Parts/Oil.
                           <br />
                           We thank you very much for the interest evinced in
@@ -112,14 +119,20 @@
                           However if you have any query or need more
                           information, please feel free to contact us. <br />
                           Thanking you, <br /> <br>
-                          <strong className="customer-text-one">
-                            AEGIS Projects Technology Pvt Ltd. <br />
-                          </strong>
+                        </h3>
+                        <h2 className="customer-text-one"  style="
+                        display: inline-block;
+                        color: rgb(20, 3, 41);
+                        text-decoration: underline blueviolet;
+                      ">
+                          AEGIS Projects Technology Pvt Ltd.
+                        </h2>
+                        <h3>
                           RAJENDRA MAURYA <br>
                           TECH- DIRECTOR <br>
                           CELL NO - +919820229458 <br>
-                          E mail ID :- badrinath.naikwadi@megafine.in <br>
-                        </p>
+                          E mail ID :- <mark>badrinath.naikwadi@megafine.in</mark> <br>
+                        </h3>
                       </div>
                     </div>
                   </div>
@@ -132,7 +145,7 @@
               height: 270mm;
               margin: 0;
               padding: 3mm;
-              border: 1px solid black;
+              border: 1px solid rgb(65, 35, 65);
               page-break-after: always;
 
               background-image:url('<%= watermark %>');
@@ -146,92 +159,74 @@
                   <div className="row">
                     <div className="col-md-12">
                       <div className="table-responsive">
-                        <strong className="customer-text-one">
-                          A. OFFER ITEMS
-                        </strong>
-                        <br><br>
+                          <h3 style="color:rgb(41, 31, 112);">
+                            A. OFFER ITEMS
+                          </h3>
                         <table                        
                         className="mb-0"
                         style="
-                          border: 2px solid black;
+                          border: 2px solid rgb(65, 35, 65);
                           border-collapse: collapse;
+                          width:100%;
                         ">
                           <thead>
                             <tr>
-                              <td> <strong> Make  </strong>  </td>
-                              <td> <strong> Modal No  </strong>  </td>
-                              <td> <strong> Part Name  </strong>  </td>
-                              <td> <strong>  Part No </strong>  </td>
-                              <td> <strong> HSN Code  </strong>  </td>
-                              <td> <strong> Unit Price  </strong>  </td>
-                              <td> <strong>  Quantity </strong>  </td>
-                              <td> <strong>  IGST </strong>  </td>
-                              <td> <strong> CGST  </strong>  </td>
-                              <td> <strong>  SGST </strong>  </td>
-                              <td> <strong>  Total </strong> </td>
+                              <td style="padding: 5px;"> <strong> Make  </strong>  </td>
+                              <td style="padding: 5px;"> <strong> Modal No  </strong>  </td>
+                              <td style="padding: 5px;"> <strong> Part Name  </strong>  </td>
+                              <td style="padding: 5px;"> <strong>  Part No </strong>  </td>
+                              <td style="padding: 5px;"> <strong> HSN Code  </strong>  </td>
+                              <td style="padding: 5px;"> <strong> Unit Price  </strong>  </td>
+                              <td style="padding: 5px;"> <strong>  Quantity </strong>  </td>
+                              <td style="padding: 5px;"> <strong>  Total </strong> </td>
                             </tr>
                           </thead>
                           <% if(itemList.length >0){ %>
                             <% itemList.forEach(item=>{%>
                               <tr key="1">
-                                <td><%= item.item_make %></td>
-                                <td><%= item.item_modalNo %></td>
-                                <td><%= item.item_name %></td>
-                                <td><%= item.item_partNo %></td>
-                                <td><%= item.item_HSN %></td>
-                                <td><%= item.item_price %></td>
-                                <td><%= item.item_quantity %></td>
-                                <td><%= item.item_IGST %></td>
-                                <td><%= item.item_CGST %></td>
-                                <td><%= item.item_SGST %></td>
-                                <td><%= item.item_total_price %></td>
+                                <td style="padding: 5px;"><%= item.item_make %></td>
+                                <td style="padding: 5px;"><%= item.item_modalNo %></td>
+                                <td style="padding: 5px;"><%= item.item_name %></td>
+                                <td style="padding: 5px;"><%= item.item_partNo %></td>
+                                <td style="padding: 5px;"><%= item.item_HSN %></td>
+                                <td style="padding: 5px;"><%= item.item_price %></td>
+                                <td style="padding: 5px;"><%= item.item_quantity %></td>
+                                <td style="padding: 5px;"><%= item.item_total_price %></td>
                               </tr>
                             <% }) %>
                         <%} %>
+                          <tr align="right">
+                            <td align="right" colspan="8" style="padding: 7px;">Total Amount <strong> ₹ <%= total_cost %> /-</strong></td>
+                          </tr>
                         </table>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="row align-items-center justify-content-center" >
-                  <div className="col-lg-6 col-md-6">
-                    <div className="invoice-total-card">
-                      <div className="invoice-total-box">
-                        <div className="invoice-total-inner">
-                          <!-- <p className="mb-0">
-                            Sub total <span>Rs.3,300.00</span>
-                          </p> -->
-                        </div>
-                        <div className="invoice-total-footer">
-                          <h4>
-                            Total Amount <span>Rs.<%= total_cost %></span>
-                          </h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <div className="col-lg-12 col-md-12">
                     <div className="invoice-terms">
                       <h4>Notes:</h4>
                       <ul>
-                        <li>We Supply All Compressors Make Spares Parts.</li>
-                        <li>
+                        <li><h3 style="color:rgb(67, 51, 170);">We Supply All Compressors Make Spares Parts.</h3></li>
+                        <li><h3 style="color:rgb(67, 51, 170);">
                           All Compressor Spare Parts Manufactured By Standard
                           Manufacturers & It’s Not Imposed By Any Manufacturer
                           Name/Stamp
+                        </h3>
                         </li>
-                        <li>We Supply All Compressors Make Spares Parts.</li>
+                        <li><h3 style="color:rgb(67, 51, 170);">We Supply All Compressors Make Spares Parts.</h3></li>
                         <li>
-                          Compressor Oil Packed In Plain HDP Can/Barrel.
-                        </li>
-                        <li>
-                          Once Acceptance Letter (Against Order) Had Confirmed
-                          By Both Parties, Cancellation Order Will Be Not
-                          Accepted & Amount Will Be Not Refund Back.
+                          <h3 style="color:rgb(67, 51, 170);">Compressor Oil Packed In Plain HDP Can/Barrel.</h3>
                         </li>
                         <li>
-                          Used Material Can Not Be Replaced, Related To
-                          Fitment Issue..
+                          <h3 style="color:rgb(67, 51, 170);">Once Acceptance Letter (Against Order) Had Confirmed
+                            By Both Parties, Cancellation Order Will Be Not
+                            Accepted & Amount Will Be Not Refund Back.</h3>
+                        </li>
+                        <li>
+                          <h3 style="color:rgb(67, 51, 170);">Used Material Can Not Be Replaced, Related To
+                            Fitment Issue..</h3>
                         </li>
                       </ul>
                     </div>
@@ -239,41 +234,45 @@
                 </div>
                 <!-- --------------------pg 2 ends-------------------------- -->
                 <div>
-                  <br><br>
                 <!-- {/* -----------------------------isko change mat karo--------------------------- */} -->
                 <div className="invoice-item invoice-table-wrap"  style="page-break-after: always;">
                   <div className="row">
                     <div className="col-md-12">
                       <div className="table-responsive">
-                        <strong className="customer-text-one">
-                          B. COMMERCIAL TERMS & CONDITIONS.
-                        </strong> <br> <br>
-                        <table className="invoice-table table table-center mb-0">
+                          <h3 style="color:rgb(41, 31, 112);">
+                            B. COMMERCIAL TERMS & CONDITIONS.
+                          </h3>
+                        <table className="invoice-table table table-center mb-0" style="width:85%">
                           <tbody>
                             <tr>
-                              <td>01</td>
-                              <td>PACKING CHARGE </td>
-                              <td><%= packing_charge %></td>
+                              <td style="padding: 5px;">01</td>
+                              <td style="padding: 5px;">PACKING CHARGE </td>
+                              <td style="padding: 5px;"><%= packing_charge %></td>
                             </tr>
                             <tr>
-                              <td>02</td>
-                              <td>TRANSPORT CHARGES </td>
-                              <td><%= transport_charge %></td>
+                              <td style="padding: 5px;">02</td>
+                              <td style="padding: 5px;">TRANSPORT CHARGES </td>
+                              <td style="padding: 5px;"><%= transport_charge %></td>
                             </tr>
                             <tr>
-                              <td>04</td>
-                              <td>PAYMENTS TERMS </td>
-                              <td><%= payment_terms %></td>
+                              <td style="padding: 5px;">04</td>
+                              <td style="padding: 5px;">PAYMENTS TERMS </td>
+                              <td style="padding: 5px;"><%= payment_terms %></td>
                             </tr>
                             <tr>
-                              <td>05</td>
-                              <td>DELIVERY </td>
-                              <td><%= delivery %></td>
+                              <td style="padding: 5px;">05</td>
+                              <td style="padding: 5px;">DELIVERY </td>
+                              <td style="padding: 5px;"><%= delivery %></td>
                             </tr>
                             <tr>
-                              <td>06</td>
-                              <td>OFFER VALIDITY </td>
-                              <td><%= offer_validity %></td>
+                              <td style="padding: 5px;">06</td>
+                              <td style="padding: 5px;">OFFER VALIDITY </td>
+                              <td style="padding: 5px;"><%= offer_validity %></td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 5px;">07</td>
+                              <td style="padding: 5px;">GST </td>
+                              <td style="padding: 5px;"><%= gst_value %> %</td>
                             </tr>
                           </tbody>
                         </table>
@@ -281,17 +280,14 @@
                     </div>
                     <div className="col-md-12">
                       <div className="invoice-info">
-                        <p className="invoice-details invoice-details-two">
+                        <h3 className="invoice-details invoice-details-two">
                             <strong className="customer-text-one">
                             Thanking You
                             We wait for your reply
                             AEGIS Projects Technology Pvt Ltd. <br />
                           </strong>
-                          RAJENDRA MAURYA <br>
-                          TECH- DIRECTOR <br>
-                          CELL NO - +919820229458 <br>
-                          E mail ID :- badrinath.naikwadi@megafine.in <br>
-                        </p>
+                          <br>
+                        </h3>
                       </div>
                     </div>
                   </div>
@@ -309,7 +305,7 @@
                       height: 270mm;
                       margin: 0;
                       padding: 3mm;
-                      border: 1px solid black;
+                      border: 1px solid rgb(65, 35, 65);
                       page-break-after: always;
 
                       background-image:url('<%= watermark %>');
@@ -319,17 +315,20 @@
                       background-size: contain;
                       z-index: -1;
                     ">
-                        <strong className="customer-text-one">
-                          C. PARTY MASTER FORM
-                        </strong><br>
-                        CIN NO. : U74999MH2008PTC186812
+                          <h3 style="color:rgb(41, 31, 112);">
+                            C. PARTY MASTER FORM
+                          </h3>
+                          <h3 style="color:rgb(67, 51, 170);">
+                            CIN NO. : U74999MH2008PTC186812
+                          </h3>
+                                                
                         <p className="invoice-name">
                           Dear Sir, <br />
                           As required by you, please find hereunder details to
                           be submitted by us for laying out Party Master
                           against Vendor registration
                         </p>
-                        <table className="invoice-table table table-center mb-0">
+                        <table className="invoice-table table table-center mb-0" style="width:100%">
                           <tbody>
                             <tr>
                               <td>Party Name </td>
@@ -372,32 +371,8 @@
                               <td> &nbsp; &nbsp; 022-25663611, 022-25663612 </td>
                             </tr>
                             <tr>
-                              <td>Fax No. </td>
-                              <td> &nbsp; &nbsp; 022- 25663613 </td>
-                            </tr>
-                            <tr>
                               <td>Contact Person </td>
                               <td> &nbsp; &nbsp; Mr. Rajendra Maurya </td>
-                            </tr>
-                            <tr>
-                              <td>Local Sales Tax No </td>
-                              <td> &nbsp; &nbsp; 27240756610 V</td>
-                            </tr>
-                            <tr>
-                              <td>L.S.T. Date </td>
-                              <td> </td>
-                            </tr>
-                            <tr>
-                              <td>Central Sales Tax No </td>
-                              <td> &nbsp; &nbsp; 27240756610 C </td>
-                            </tr>
-                            <tr>
-                              <td>C.S.T. Date </td>
-                              <td> </td>
-                            </tr>
-                            <tr>
-                              <td>Work Contract Tax No ,S Tax </td>
-                              <td> &nbsp; &nbsp; AAHCA3261BSD001</td>
                             </tr>
                             <tr>
                               <td>Central Excise Code No</td>
