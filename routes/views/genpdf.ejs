@@ -9,117 +9,113 @@
     <link rel="stylesheet" href="./gen.css" />
     <style>
       td {
-        border: solid 2px black;
+        border: solid 2px rgb(65, 35, 65);
         margin: 3px;
-        padding: 3px;
+        padding: 2px;
         word-break:break-all;
       }
-      @page {
-        border : 1px solid; 
-      }
+      p {
+      text-indent: 10px;
+    }
     </style>
   </head>
   <body>
     <div
-      className="main-wrapper border"
-      style="
-        width: 185mm;
-        height: 270mm;
-        margin: 0;
-        padding: 3mm;
-        border: 1px solid black;
-
-        background-image:url('<%= watermark %>');
-        background-repeat: no-repeat;
-        background-position-x: center;
-        background-position-y: 18rem;
-        background-size: contain;
-        z-index: -1;
-      "
-    >
-      <div className="page-wrapper">
-        <div className="content container-fluid">
-          <div className="row justify-content-center">
-            <div className="col-xl-6 mx-4">
-              <div className="card invoice-info-card">
-                <div className="card-body">
-                  <div className="invoice-item invoice-item-one">
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="invoice-logo">
-                          <img
-                            src="<%= logo %>"
-                            width="120"
-                            height="120"
-                            alt="Image"
-                            style="vertical-align: middle"
-                          />
-                          <h2
-                            style="
-                              display: inline-block;
-                              color: rgb(32, 91, 229);
-                            "
-                          >
-                            AEGIS PROJECTS TECHNOLOGY PVT. LTD
-                          </h2>
-                          <p style="display: inline-block">
-                            Date : - <%= new Date().toLocaleString() %></p>
-                          </p>
-                        </div>
+       className="main-wrapper border"
+       style="
+       width: 185mm;
+       height: 270mm;
+       margin: 0;
+       padding: 3mm;
+       border: 1px solid black;
+       background-image:url('<%= watermark %>');
+       background-repeat: no-repeat;
+       background-position-x: center;
+       background-position-y: 18rem;
+       background-size: contain;
+       z-index: -1;
+       "
+       >
+       <div className="page-wrapper">
+          <div className="content container-fluid">
+             <div className="row justify-content-center">
+                <div className="col-xl-6 mx-4">
+                   <div className="card invoice-info-card">
+                      <div className="card-body">
+                         <div className="invoice-item invoice-item-one">
+                            <div className="row">
+                               <div className="col-md-12">
+                                  <div className="invoice-logo">
+                                     <img
+                                        src="<%= logo %>"
+                                        width="120"
+                                        height="120"
+                                        alt="Image"
+                                        style="vertical-align: middle"
+                                        />
+                                     <h2
+                                        style="
+                                        display: inline-block;
+                                        color: rgb(32, 91, 229);
+                                        "
+                                        >
+                                        AEGIS PROJECTS TECHNOLOGY PVT. LTD
+                                     </h2>
+                                     <h3 style="display: inline-block">
+                                        Date : - <%= new Date().toLocaleString() %></p>
+                                     </h3>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                         <br />
+                         <hr />
+                         <br />
+                         <div className="invoice-item invoice-table-wrap">
+                            <div className="row">
+                               <div className="col-md-12">
+                                  <div className="table-responsive">
+                                     <h3 style="color:rgb(41, 31, 112);">
+                                        A. MATERIAL DESCRIPTION :
+                                     </h3>
+                                     <br />
+                                     <br />
+                                     <table
+                                        className="mb-0"
+                                        style="
+                                        border: 2px solid rgb(65, 35, 65);
+                                        border-collapse: collapse;
+                                        width:100%;
+                                        "
+                                        >
+                                        <thead>
+                                           <tr>
+                                              <td style="padding: 5px;"><strong>Make</strong></td>
+                                              <td style="padding: 5px;"><strong>Modal No</strong></td>
+                                              <td style="padding: 5px;"><strong>Part Name</strong></td>
+                                              <td style="padding: 5px;"><strong>Part No</strong></td>
+                                           </tr>
+                                        </thead>
+                                        <% if(itemList.length >0){ %> <%
+                                           itemList.forEach(item=>{%>
+                                        <tr key="1">
+                                           <td style="padding: 5px;"><%= item.item_make %></td>
+                                           <td style="padding: 5px;"><%= item.item_modalNo %></td>
+                                           <td style="padding: 5px;"><%= item.item_name %></td>
+                                           <td style="padding: 5px;"><%= item.item_partNo %></td>
+                                        </tr>
+                                        <% }) %> <%} %>
+                                     </table>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <br />
-                  <hr />
-                  <br />
-
-                  <div className="invoice-item invoice-table-wrap">
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="table-responsive">
-                          <strong className="customer-text-one">
-                            A. MATERIAL DESCRIPTION :
-                          </strong>
-                          <br />
-                          <br />
-                          <table
-                            className="mb-0"
-                            style="
-                              border: 2px solid black;
-                              border-collapse: collapse;
-                            "
-                          >
-                            <thead>
-                              <tr>
-                                <td><strong>Make</strong></td>
-                                <td><strong>Modal No</strong></td>
-                                <td><strong>Part Name</strong></td>
-                                <td><strong>Part No</strong></td>
-                              </tr>
-                            </thead>
-
-                            <% if(itemList.length >0){ %> <%
-                              itemList.forEach(item=>{%>
-                              <tr key="1">
-                                <td><%= item.item_make %></td>
-                                <td><%= item.item_modalNo %></td>
-                                <td><%= item.item_name %></td>
-                                <td><%= item.item_partNo %></td>
-                              </tr>
-                            <% }) %> <%} %>
-
-
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                   </div>
                 </div>
-              </div>
-            </div>
+             </div>
           </div>
-        </div>
-      </div>
+       </div>
     </div>
-  </body>
+ </body>
 </html>
