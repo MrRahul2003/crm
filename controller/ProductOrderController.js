@@ -12,6 +12,8 @@ import TaxInvoice from "../model/TaxInvoice.js";
 dotenv.config();
 const watermark = process.env.watermark;
 const logo = process.env.logo;
+const EMAIL = process.env.EMAIL;
+const PASS = process.env.PASS;
 
 const pdfgenProduct = async (req, res) => {
   try {
@@ -99,13 +101,13 @@ const sendMailProduct = async (req, res) => {
       port: 465,
       secure: false, // true for 465, false for other ports
       auth: {
-        user: "rahulsdas2003@gmail.com",
-        pass: "kpnxfdblugphoexy",
+        user: EMAIL,
+        pass: PASS,
       },
     });
 
     let details = {
-      from: "rahulsdas2003@gmail.com",
+      from: EMAIL,
       to: req.body.contactDetails.contact_email,
       subject: "Hello ✔ New Request for contacting AEGIS projects",
       text: bodyMsg,
@@ -242,7 +244,6 @@ const deleteTaxInvoice = async (req, res) => {
 
 const pdfgenTaxInvoice = async (req, res) => {
   try {
-    console.log(__dirname, req.body);
     var itemList = req.body.itemList;
     var total_cost = 0;
 
@@ -266,10 +267,27 @@ const pdfgenTaxInvoice = async (req, res) => {
         "/routes/views",
         "/gentaxInvoice.ejs"
       );
-      console.log(logo);
+      
+      var TaxInvoice = req.body.TaxInvoicedata[0];
+      console.log(TaxInvoice);
+
       const html = await ejs.renderFile(filePathName, {
         itemList: itemList,
         contactData: req.body.contactDetails,
+
+        po_no: TaxInvoice.po_no,
+        po_date: TaxInvoice.po_date,
+        invoice_no: TaxInvoice.invoice_no,
+        invoice_date: TaxInvoice.invoice_date,
+        challan_no: TaxInvoice.challan_no,
+        challan_date: TaxInvoice.challan_date,
+
+        customer_name: TaxInvoice.customer_name,
+        customer_phone: TaxInvoice.customer_phone,
+        customer_address: TaxInvoice.customer_address,
+        company_name: TaxInvoice.company_name,
+        gst_no: TaxInvoice.gst_no,
+
 
         total_cost: total_cost,
 
@@ -315,13 +333,13 @@ const sendMailTaxInvoice = async (req, res) => {
       port: 465,
       secure: false, // true for 465, false for other ports
       auth: {
-        user: "rahulsdas2003@gmail.com",
-        pass: "kpnxfdblugphoexy",
+        user: EMAIL,
+        pass: PASS,
       },
     });
 
     let details = {
-      from: "rahulsdas2003@gmail.com",
+      from: EMAIL,
       to: req.body.contactDetails.contact_email,
       subject: "Hello ✔ New Request for contacting AEGIS projects",
       text: bodyMsg,
@@ -361,7 +379,7 @@ const downloadTaxInvoice = async (req, res) => {
 
 const pdfgenChallan = async (req, res) => {
   try {
-    console.log(__dirname, req.body);
+    console.log(__dirname, req.body.TaxInvoicedata);
     var itemList = req.body.itemList;
     var total_cost = 0;
 
@@ -385,10 +403,28 @@ const pdfgenChallan = async (req, res) => {
         "/routes/views",
         "/genchallan.ejs"
       );
-      console.log(logo);
+      
+      var TaxInvoice = req.body.TaxInvoicedata[0];
+      console.log(TaxInvoice);
+
       const html = await ejs.renderFile(filePathName, {
         itemList: itemList,
         contactData: req.body.contactDetails,
+        TaxInvoice: req.body.TaxInvoicedata,
+
+        po_no: TaxInvoice.po_no,
+        po_date: TaxInvoice.po_date,
+        invoice_no: TaxInvoice.invoice_no,
+        invoice_date: TaxInvoice.invoice_date,
+        challan_no: TaxInvoice.challan_no,
+        challan_date: TaxInvoice.challan_date,
+
+        customer_name: TaxInvoice.customer_name,
+        customer_phone: TaxInvoice.customer_phone,
+        customer_address: TaxInvoice.customer_address,
+        company_name: TaxInvoice.company_name,
+        gst_no: TaxInvoice.gst_no,
+        vendor_no: TaxInvoice.vendor_no,
 
         total_cost: total_cost,
 
@@ -434,13 +470,13 @@ const sendMailChallan = async (req, res) => {
       port: 465,
       secure: false, // true for 465, false for other ports
       auth: {
-        user: "rahulsdas2003@gmail.com",
-        pass: "kpnxfdblugphoexy",
+        user: EMAIL,
+        pass: PASS,
       },
     });
 
     let details = {
-      from: "rahulsdas2003@gmail.com",
+      from: EMAIL,
       to: req.body.contactDetails.contact_email,
       subject: "Hello ✔ New Request for contacting AEGIS projects",
       text: bodyMsg,

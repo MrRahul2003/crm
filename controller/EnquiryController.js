@@ -13,6 +13,8 @@ import dotenv from "dotenv";
 dotenv.config();
 const watermark = process.env.watermark;
 const logo = process.env.logo;
+const EMAIL = process.env.EMAIL;
+const PASS = process.env.PASS;
 
 const pdfgen = async (req, res) => {
   try {
@@ -80,13 +82,13 @@ const sendMail = async (req, res) => {
       port: 465,
       secure: false, // true for 465, false for other ports
       auth: {
-        user: "rahulsdas2003@gmail.com",
-        pass: "kpnxfdblugphoexy",
+        user: EMAIL,
+        pass: PASS,
       },
     });
 
     let details = {
-      from: "rahulsdas2003@gmail.com",
+      from: EMAIL,
       to: sendingVendorsEmail,
       subject: "Hello ✔ New Request for contacting AEGIS projects",
       text: bodyMsg,

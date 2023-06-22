@@ -32,6 +32,12 @@ const PurchaseOrderSchema = new mongoose.Schema({
   itemList: {
     type: Array,
   },
+  GstTypeInfo: {
+    type: String,
+  },
+  GstValue: {
+    type: String,
+  },
   lastmodifydate: {
     type: Date,
     default: Date.now,

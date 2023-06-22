@@ -33,6 +33,7 @@ const TaxInvoiceSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+
   packing_charge: {
     type: String,
   },
@@ -54,6 +55,45 @@ const TaxInvoiceSchema = new mongoose.Schema({
   GstTypeInfo: {
     type: String,
   },
+
+  po_no: {
+    type: String,
+  },
+  po_date: {
+    type: String,
+  },
+  invoice_no: {
+    type: String,
+  },
+  invoice_date: {
+    type: String,
+  },
+  challan_no: {
+    type: String,
+  },
+  challan_date: {
+    type: String,
+  },
+  vendor_no: {
+    type: String,
+  },
+
+  customer_name: {
+    type: String,
+  },
+  customer_phone: {
+    type: String,
+  },
+  customer_address: {
+    type: String,
+  },
+  company_name: {
+    type: String,
+  },
+  gst_no: {
+    type: String,
+  },
+
 });
 
 const TaxInvoice = mongoose.model("TaxInvoice", TaxInvoiceSchema);

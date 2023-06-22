@@ -13,17 +13,31 @@ import dotenv from "dotenv";
 dotenv.config();
 const watermark = process.env.watermark;
 const logo = process.env.logo;
+const EMAIL = process.env.EMAIL;
+const PASS = process.env.PASS;
 
 const purchaseordergen = async (req, res) => {
   try {
     console.log("purchase", __dirname, req.body);
     var itemList = req.body.itemList;
     var total_cost = 0;
+    var final_total = 0;
+    var GstTypeInfo = req.body.GstTypeInfo;
+    var GstValue = req.body.GstValue;
+    var Freight = req.body.Freight;
 
     itemList.forEach((element) => {
       total_cost = parseInt(total_cost) + parseInt(element.item_total_price);
-      console.log(total_cost + "\n");
     });
+    var GstValueCalc =
+      GstTypeInfo === "IGST"
+        ? req.body.GstValue / 100
+        : (req.body.GstValue * 2) / 100;
+
+    GstValueCalc == 0 ? 1 : GstValueCalc;
+    final_total = (parseFloat(total_cost) + parseFloat(Freight)) * parseFloat(GstValueCalc);
+
+    console.log(total_cost, Freight, GstValueCalc, final_total);
 
     if (itemList.length === 0) {
       res.status(500).send("no itemList found");
@@ -49,6 +63,11 @@ const purchaseordergen = async (req, res) => {
         total_cost: total_cost,
         vendor_name: req.body.vendor_name,
         vendor_email: req.body.vendor_email,
+
+        GstTypeInfo: GstTypeInfo,
+        GstValue: GstValue,
+        Freight: Freight,
+        final_total: final_total,
 
         watermark: watermark,
         logo: logo,
@@ -91,13 +110,13 @@ const sendPurchaseorderMail = async (req, res) => {
       port: 465,
       secure: false, // true for 465, false for other ports
       auth: {
-        user: "rahulsdas2003@gmail.com",
-        pass: "kpnxfdblugphoexy",
+        user: EMAIL,
+        pass: PASS,
       },
     });
 
     let details = {
-      from: "rahulsdas2003@gmail.com",
+      from: EMAIL,
       to: req.body.vendorData.vendor_email,
       subject: "Hello ✔ New Request for contacting AEGIS projects",
       text: bodyMsg,

@@ -23,6 +23,15 @@ const QuotationSchema = new mongoose.Schema({
   itemList: {
     type: Array,
   },
+  GstTypeInfo: {
+    type: String,
+  },
+  GstValue: {
+    type: String,
+  },
+  Freight: {
+    type: String,
+  },
   lastmodifydate: {
     type: Date,
     default: Date.now,
