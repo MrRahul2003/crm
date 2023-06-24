@@ -17,14 +17,27 @@ const PASS = process.env.PASS;
 
 const pdfgenProduct = async (req, res) => {
   try {
-    console.log(__dirname, req.body);
+    console.log("product", __dirname, req.body);
     var itemList = req.body.itemList;
     var total_cost = 0;
+    var final_total = 0;
+    var GstTypeInfo = req.body.GstTypeInfo;
+    var GstValue = req.body.gst_value;
 
     itemList.forEach((element) => {
-      total_cost = parseInt(total_cost) + parseInt(element.item_total_price);
-      console.log(total_cost + "\n");
+      total_cost = parseInt(total_cost) + parseInt(element.total);
     });
+
+    var GstValueCalc =
+      GstTypeInfo === "IGST" ? GstValue / 100 : (GstValue * 2) / 100;
+    if (GstValueCalc === 0) {
+      GstValueCalc = 1;
+    }
+    final_total =
+      parseFloat(total_cost) +
+      parseFloat(total_cost) * parseFloat(GstValueCalc);
+
+    console.log(GstValue, total_cost, GstValueCalc, final_total);
 
     if (itemList.length === 0) {
       res.status(500).send("no itemList found");
@@ -50,13 +63,15 @@ const pdfgenProduct = async (req, res) => {
         refno: req.body.uuid_id,
         total_cost: total_cost,
 
+        GstTypeInfo: GstTypeInfo,
+        GstValue: GstValue,
+        final_total: final_total,
+
         packing_charge: req.body.packing_charge,
         transport_charge: req.body.transport_charge,
         payment_terms: req.body.payment_terms,
         delivery: req.body.delivery,
         offer_validity: req.body.offer_validity,
-        GstTypeInfo: req.body.GstTypeInfo,
-        gst_value: req.body.gst_value,
         enquiry_addingdate: req.body.enquiry_addingdate,
 
         watermark: watermark,
@@ -244,13 +259,28 @@ const deleteTaxInvoice = async (req, res) => {
 
 const pdfgenTaxInvoice = async (req, res) => {
   try {
-    var itemList = req.body.itemList;
     var total_cost = 0;
+    var final_total = 0;
+    var TaxInvoice = req.body.TaxInvoicedata[0];
+    var itemList = TaxInvoice.itemList;
+    var GstValue = TaxInvoice.gst_value;
+    var GstTypeInfo = TaxInvoice.GstTypeInfo;
 
     itemList.forEach((element) => {
-      total_cost = parseInt(total_cost) + parseInt(element.item_total_price);
-      console.log(total_cost + "\n");
+      total_cost = parseInt(total_cost) + parseInt(element.total);
+      console.log(total_cost);
     });
+
+    var GstValueCalc =
+      GstTypeInfo === "IGST" ? GstValue / 100 : (GstValue * 2) / 100;
+    if (GstValueCalc === 0) {
+      GstValueCalc = 1;
+    }
+    final_total =
+      parseFloat(total_cost) +
+      parseFloat(total_cost) * parseFloat(GstValueCalc);
+
+    console.log(GstValue, total_cost, GstValueCalc, final_total);
 
     if (itemList.length === 0) {
       res.status(500).send("no itemList found");
@@ -267,9 +297,6 @@ const pdfgenTaxInvoice = async (req, res) => {
         "/routes/views",
         "/gentaxInvoice.ejs"
       );
-      
-      var TaxInvoice = req.body.TaxInvoicedata[0];
-      console.log(TaxInvoice);
 
       const html = await ejs.renderFile(filePathName, {
         itemList: itemList,
@@ -288,8 +315,10 @@ const pdfgenTaxInvoice = async (req, res) => {
         company_name: TaxInvoice.company_name,
         gst_no: TaxInvoice.gst_no,
 
-
         total_cost: total_cost,
+        GstTypeInfo: GstTypeInfo,
+        GstValue: GstValue,
+        final_total: final_total,
 
         watermark: watermark,
         logo: logo,
@@ -381,11 +410,12 @@ const pdfgenChallan = async (req, res) => {
   try {
     console.log(__dirname, req.body.TaxInvoicedata);
     var itemList = req.body.itemList;
-    var total_cost = 0;
+    var total_quantity = 0;
 
     itemList.forEach((element) => {
-      total_cost = parseInt(total_cost) + parseInt(element.item_total_price);
-      console.log(total_cost + "\n");
+      total_quantity =
+        parseInt(total_quantity) + parseInt(element.item_quantity);
+      console.log(total_quantity + "\n");
     });
 
     if (itemList.length === 0) {
@@ -403,7 +433,7 @@ const pdfgenChallan = async (req, res) => {
         "/routes/views",
         "/genchallan.ejs"
       );
-      
+
       var TaxInvoice = req.body.TaxInvoicedata[0];
       console.log(TaxInvoice);
 
@@ -426,7 +456,7 @@ const pdfgenChallan = async (req, res) => {
         gst_no: TaxInvoice.gst_no,
         vendor_no: TaxInvoice.vendor_no,
 
-        total_cost: total_cost,
+        total_quantity: total_quantity,
 
         watermark: watermark,
         logo: logo,

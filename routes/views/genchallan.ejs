@@ -8,6 +8,9 @@
     <link rel="shortcut icon" href="/logo.jpeg" />
     <link rel="stylesheet" href="./gen.css" />
     <style type="text/css">
+      * {
+        font-family: "Trebuchet MS", sans-serif;
+      }
       td {
         color: #212020;
         border: solid 1px rgb(65, 35, 65);
@@ -80,9 +83,10 @@
                           <table
                             className="mb-0"
                             style="
-                              border: 1px solid rgb(65, 35, 65);
+                              border: 2px solid rgb(65, 35, 65);
                               border-collapse: collapse;
                               width: 100%;
+                              table-layout: fixed;
                             "
                           >
                             <tr>
@@ -148,13 +152,13 @@
                                 <strong> <%= challan_date %> </strong>
                               </td>
                             </tr>
-                            
+
                             <tr>
                               <td colspan="2" class="padme">
                                 <strong> Vendor NO</strong>
                               </td>
                               <td colspan="4" class="padme">
-                                <strong> <%= vendor_no %>  </strong>
+                                <strong> <%= vendor_no %> </strong>
                               </td>
                             </tr>
 
@@ -239,10 +243,10 @@
                             <tr>
                               <td colspan="4" class="padme"></td>
                               <td colspan="1" class="padme">
-                                <strong>Total Amount</strong>
+                                <strong>Total Quantity</strong>
                               </td>
                               <td colspan="1" class="padme">
-                                <strong> ₹ <%= total_cost %> /-</strong>
+                                <strong> <%= total_quantity %> </strong>
                               </td>
                             </tr>
 
@@ -264,12 +268,12 @@
                             </tr>
 
                             <tr>
-                              <td colspan="8" class="padme">
+                              <td colspan="6" class="padme">
                                 <small>
                                   "I/we hereby certify that my/our registration
                                   certificate under the MVAT Act 2002 is in
-                                  force on the date on which the sale of <br> the
-                                  goods specified in this <br> bill/cash memorandium
+                                  force on the date on which the sale of the
+                                  goods specified in this bill/cash memorandium
                                   is made by me/us & that the transaction of
                                   sale covered by this bill/cash memorandum has
                                   effected by me in the regular course of

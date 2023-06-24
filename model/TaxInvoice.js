@@ -49,10 +49,10 @@ const TaxInvoiceSchema = new mongoose.Schema({
   offer_validity: {
     type: String,
   },
-  gst_value: {
+  GstTypeInfo: {
     type: String,
   },
-  GstTypeInfo: {
+  gst_value: {
     type: String,
   },
 

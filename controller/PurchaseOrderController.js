@@ -34,10 +34,14 @@ const purchaseordergen = async (req, res) => {
         ? req.body.GstValue / 100
         : (req.body.GstValue * 2) / 100;
 
-    GstValueCalc == 0 ? 1 : GstValueCalc;
-    final_total = (parseFloat(total_cost) + parseFloat(Freight)) * parseFloat(GstValueCalc);
+    if (GstValueCalc === 0) {
+      GstValueCalc = 1;
+    }
 
-    console.log(total_cost, Freight, GstValueCalc, final_total);
+    final_total =
+      (parseFloat(total_cost) + parseFloat(Freight)) * parseFloat(GstValueCalc);
+
+    console.log(GstValue, total_cost, Freight, GstValueCalc, final_total);
 
     if (itemList.length === 0) {
       res.status(500).send("no itemList found");
