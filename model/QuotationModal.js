@@ -32,6 +32,9 @@ const QuotationSchema = new mongoose.Schema({
   Freight: {
     type: String,
   },
+  packaging: {
+    type: String,
+  },
   lastmodifydate: {
     type: Date,
     default: Date.now,

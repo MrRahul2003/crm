@@ -11,6 +11,9 @@ const TaxInvoiceSchema = new mongoose.Schema({
   enquiry_contact_id: {
     type: String,
   },
+  uuid_id: {
+    type: String,
+  },
   enquiry_id: {
     type: String,
   },  
@@ -55,7 +58,9 @@ const TaxInvoiceSchema = new mongoose.Schema({
   gst_value: {
     type: String,
   },
-
+  placeofsupply: {
+    type: String,
+  },
   po_no: {
     type: String,
   },
@@ -82,12 +87,6 @@ const TaxInvoiceSchema = new mongoose.Schema({
     type: String,
   },
   customer_phone: {
-    type: String,
-  },
-  customer_address: {
-    type: String,
-  },
-  company_name: {
     type: String,
   },
   gst_no: {

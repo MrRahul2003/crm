@@ -106,6 +106,7 @@ import {
   getPaymentPurchaseOrder,
 } from "../controller/PurchaseOrderpayment.js";
 import { addPaymentProductOrder, getPaymentProductOrder } from "../controller/ProductOrderPayment.js";
+import { addVendorPaymentData, addVendorTaxInvoice, deleteVendorPayments, deleteVendorTaxInvoice, getVendorPaymentData, getVendorTaxInvoice, getallVendorTaxInvoice } from "../controller/VendorTaxInvoice.js";
 
 const route = express.Router();
 
@@ -186,6 +187,11 @@ route.post("/purchaseorder/getallpurchaseorder", getAllPurchaseOrder);
 route.post("/purchaseorder/addpayment", addPaymentPurchaseOrder);
 route.post("/purchaseorder/getpayment", getPaymentPurchaseOrder);
 
+// taxinvoice payment
+route.post("/purchaseorder/vendorpayment/addtaxinvoicepayment", addVendorPaymentData);
+route.post("/purchaseorder/vendorpayment/gettaxinvoicepayment", getVendorPaymentData);
+route.post("/purchaseorder/vendorpayment/deletetaxinvoicepayment", deleteVendorPayments);
+
 // product order
 route.post("/productorder/addproductorder", addProductOrder);
 route.post("/productorder/getallproductorder", getAllProductOrder);
@@ -212,6 +218,10 @@ route.post(
 );
 route.post("/purchaseorder/getvendorbill", getVendorBill);
 route.post("/purchaseorder/downloadvendorbill", downloadVendorBill);
+route.post("/purchaseorder/addvendortaxinvoice", addVendorTaxInvoice);
+route.post("/purchaseorder/getvendortaxinvoice", getVendorTaxInvoice);
+route.post("/purchaseorder/getallvendortaxinvoice", getallVendorTaxInvoice);
+route.post("/purchaseorder/deletevendortaxinvoice", deleteVendorTaxInvoice);
 
 //pdf generator -- productorder
 route.post("/productorder/genproductorder", pdfgenProduct);
@@ -221,7 +231,6 @@ route.post("/productorder/sendproductorder", sendMailProduct);
 route.post("/productorder/genpdftaxinvoice", pdfgenTaxInvoice);
 route.post("/productorder/sendmailtaxinvoice", sendMailTaxInvoice);
 route.post("/productorder/downloadtaxinvoice", downloadTaxInvoice);
-
 
 route.post("/productorder/genpdfchallan", pdfgenChallan);
 route.post("/productorder/sendmailchallan", sendMailChallan);

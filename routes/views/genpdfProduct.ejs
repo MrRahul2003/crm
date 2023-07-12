@@ -56,14 +56,34 @@
                                        alt="Image"
                                        style="vertical-align: middle"
                                        />
-                                    <h2
+                                       <h2
                                        style="
-                                       display: inline-block;
-                                       color: rgb(32, 91, 229);
+                                         display: inline-block;
+                                         color: rgb(32, 91, 229);
+                                         margin-top: 20px;
+                                         font-size: 28px;
                                        "
-                                       >
+                                     >
                                        AEGIS PROJECTS TECHNOLOGY PVT. LTD
-                                    </h2>
+                                       <small
+                                         style="
+                                           display: block;
+                                           text-align: center;
+                                           font-size: 13px;
+                                         "
+                                         >Office no.1, Swami Samarth Blg, Opp. Sangrila
+                                         Biscuit Company,
+                                       </small>
+                                       <small
+                                         style="
+                                           display: block;
+                                           text-align: center;
+                                           font-size: 13px;
+                                         "
+                                       >
+                                         Bhandup – west, Mumbai – 400078.
+                                       </small>
+                                     </h2>
                                     <h3>Date : - <%= new Date().toLocaleString() %></h3>
                                     <h3>Reference No : - AEGIS/CQ/<%= refno %></h3>
                                  </div>
@@ -171,43 +191,104 @@
                                        width:100%;
                                        table-layout: fixed;
                                        ">
-                                       <thead>
+                                       <tr>
+                                          <td
+                                            colspan="7"
+                                            class="padme"
+                                            style="
+                                              padding-top: 10px;
+                                              padding-bottom: 10px;
+                                              padding-left: 10px;
+                                              font-size: 20px;
+                                              color: rgb(41, 31, 112);
+                                            "
+                                          >
+                                            <strong> MAKE -- <%= item_make %> </strong>
+                                          </td>
+                                        </tr>
                                           <tr>
-                                             <td style="padding: 5px;"> <strong> Make  </strong>  </td>
-                                             <td style="padding: 5px;"> <strong> Modal No  </strong>  </td>
-                                             <td style="padding: 5px;"> <strong> Part Name  </strong>  </td>
-                                             <td style="padding: 5px;"> <strong>  Part No </strong>  </td>
-                                             <td style="padding: 5px;"> <strong> HSN Code  </strong>  </td>
-                                             <td style="padding: 5px;"> <strong> Unit Price  </strong>  </td>
-                                             <td style="padding: 5px;"> <strong>  Quantity </strong>  </td>
-                                             <td style="padding: 5px;"> <strong>  Total Price </strong> </td>
+                                             <td style="padding: 5px; font-size: 20px;
+                                  color: rgb(41, 31, 112);"> <strong> Modal No  </strong>  </td>
+                                             <td style="padding: 5px; font-size: 20px;
+                                  color: rgb(41, 31, 112);"> <strong> Part Name  </strong>  </td>
+                                             <td style="padding: 5px; font-size: 20px;
+                                  color: rgb(41, 31, 112);"> <strong>  Part No </strong>  </td>
+                                             <td style="padding: 5px; font-size: 20px;
+                                  color: rgb(41, 31, 112);"> <strong> HSN Code  </strong>  </td>
+                                             <td style="padding: 5px; font-size: 20px;
+                                  color: rgb(41, 31, 112);"> <strong> Unit Price  </strong>  </td>
+                                             <td style="padding: 5px; font-size: 20px;
+                                  color: rgb(41, 31, 112);"> <strong>  Quantity </strong>  </td>
+                                             <td style="padding: 5px; font-size: 20px; 
+                                  color: rgb(41, 31, 112);"> <strong>  Total Price </strong> </td>
                                           </tr>
-                                       </thead>
                                        <% if(itemList.length >0){ %>
-                                       <% itemList.forEach(item=>{%>
+                                       <% itemList.forEach((item,i)=>{%>
                                        <tr key="1">
-                                          <td style="padding: 5px;"><%= item.item_make %></td>
-                                          <td style="padding: 5px;"><%= item.item_modalNo %></td>
-                                          <td style="padding: 5px;"><%= item.item_name %></td>
-                                          <td style="padding: 5px;"><%= item.item_partNo %></td>
-                                          <td style="padding: 5px;"><%= item.item_HSN %></td>
-                                          <td style="padding: 5px;"><%= item.item_price %></td>
-                                          <td style="padding: 5px;"><%= item.item_quantity %></td>
-                                          <td style="padding: 5px;"><%= item.total %></td>
+                                          <td style="padding: 5px; word-wrap: break-word"><%= item.item_modalNo %></td>
+                                          <td style="padding: 5px; word-wrap: break-word"><%= item.item_name %></td>
+                                          <td style="padding: 5px; word-wrap: break-word"><%= item.item_partNo %></td>
+                                          <td style="padding: 5px; word-wrap: break-word"><%= item.item_HSN %></td>
+                                          <td style="padding: 5px; word-wrap: break-word"><%= item.item_price %></td>
+                                          <td style="padding: 5px; word-wrap: break-word"><%= item.item_quantity %></td>
+                                          <td style="padding: 5px; word-wrap: break-word"><%= item.total %></td>
                                        </tr>
                                        <% }) %>
                                        <%} %>
                                        <tr align="right">
-                                          <td align="right" colspan="7" style="padding: 7px;">Sub Total Amount </td>
+                                          <td align="right" colspan="6" style="padding: 7px;">Sub Total Amount </td>
                                           <td colspan="1" style="padding: 7px;"><strong> ₹ <%= total_cost %> /-</strong></td>
                                        </tr>
+
+                                       <% if(GstTypeInfo === 'IGST'){ %>
+                                          <tr align="right">
+                                            <td
+                                              align="right"
+                                              colspan="6"
+                                              style="padding: 7px"
+                                            >
+                                              <strong>
+                                               <%= GstTypeInfo %>
+                                              </strong>
+                                            </td>
+                                            <td colspan="1" style="padding: 7px">
+                                              <strong> <%= GstValueCalc %> %</strong> 
+                                            </td>
+                                          </tr>
+                                          <% } else{ %>
+                                          <tr align="right">
+                                            <td
+                                              align="right"
+                                              colspan="6"
+                                              style="padding: 7px"
+                                            >
+                                              <strong>
+                                                CGST 
+                                              </strong>
+                                            </td>
+                                            <td colspan="1" style="padding: 7px">
+                                              <strong> <%= GstValueCalc / 2 %> %</strong> 
+                                            </td>
+                                          </tr>
+                                          <tr align="right">
+                                            <td
+                                              align="right"
+                                              colspan="6"
+                                              style="padding: 7px"
+                                            >
+                                              <strong>
+                                                SGST 
+                                              </strong>
+                                            </td>
+                                            <td colspan="1" style="padding: 7px">
+                                              <strong> <%= GstValueCalc / 2 %> %</strong> 
+                                            </td>
+                                          </tr>
+                                          <% } %>
+
                                        <tr align="right">
-                                          <td align="right" colspan="7" style="padding: 7px;"><strong> <%= GstTypeInfo %></strong></td>
-                                          <td colspan="1" style="padding: 7px;"><strong> <%= GstValue %></strong> %</td>
-                                       </tr>
-                                       <tr align="right">
-                                          <td align="right" colspan="7" style="padding: 7px;">Total Amount</td>
-                                          <td colspan="1" style="padding: 7px;"> <strong> ₹ <%= final_total %> /-</strong></td>
+                                          <td align="right" colspan="6" style="padding: 7px;">Total Amount</td>
+                                          <td style="padding: 7px;"> <strong> ₹ <%= final_total %> /-</strong></td>
                                        </tr>
                                     </table>
                                  </div>
@@ -243,12 +324,12 @@
                                           <tr>
                                              <td style="padding: 5px;">01</td>
                                              <td style="padding: 5px;">PACKING CHARGE </td>
-                                             <td style="padding: 5px;"><%= packing_charge %></td>
+                                             <td style="padding: 5px;"> ₹ <%= Packaging %> /-</td>
                                           </tr>
                                           <tr>
                                              <td style="padding: 5px;">02</td>
                                              <td style="padding: 5px;">TRANSPORT CHARGES </td>
-                                             <td style="padding: 5px;"><%= transport_charge %></td>
+                                             <td style="padding: 5px;"> ₹ <%= Freight %> /-</td>
                                           </tr>
                                           <tr>
                                              <td style="padding: 5px;">04</td>
@@ -264,11 +345,6 @@
                                              <td style="padding: 5px;">06</td>
                                              <td style="padding: 5px;">OFFER VALIDITY </td>
                                              <td style="padding: 5px;"><%= offer_validity %></td>
-                                          </tr>
-                                          <tr>
-                                             <td style="padding: 5px;">07</td>
-                                             <td style="padding: 5px;">GST </td>
-                                             <td style="padding: 5px;"><%= GstValue %> %</td>
                                           </tr>
                                        </tbody>
                                     </table>

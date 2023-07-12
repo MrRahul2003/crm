@@ -32,6 +32,7 @@ const pdfgen = async (req, res) => {
 
     const html = await ejs.renderFile(filePathName, {
       itemList: itemList,
+      item_make: itemList[0].item_make,
       EnquiryData: req.body.EnquiryInfo,
       watermark: watermark,
       logo: logo

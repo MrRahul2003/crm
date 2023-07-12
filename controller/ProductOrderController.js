@@ -21,21 +21,44 @@ const pdfgenProduct = async (req, res) => {
     var itemList = req.body.itemList;
     var total_cost = 0;
     var final_total = 0;
+    var GstValueCalc = 0;
+    var GstValueCalcFinal = 0;
+
     var GstTypeInfo = req.body.GstTypeInfo;
     var GstValue = req.body.gst_value;
 
+    var Freight = req.body.transport_charge;
+    var Packaging = req.body.packing_charge;
+
+    var refno = req.body.uuid_id;
+
     itemList.forEach((element) => {
-      total_cost = parseInt(total_cost) + parseInt(element.total);
+      total_cost = parseFloat(total_cost) + parseFloat(element.total);
     });
 
-    var GstValueCalc =
-      GstTypeInfo === "IGST" ? GstValue / 100 : (GstValue * 2) / 100;
-    if (GstValueCalc === 0) {
-      GstValueCalc = 1;
+    if (GstTypeInfo === "IGST") {
+      GstValueCalc = GstValue / 100;
+      if (GstValueCalc === 0) {
+        GstValueCalc = 0.01;
+        console.log("0 gst", GstValueCalc);
+      }
+    } else {
+      GstValueCalc = (GstValue * 2) / 100;
+      if (GstValueCalc === 0) {
+        GstValueCalc = 0.01;
+        console.log("0 gst", GstValueCalc);
+      }
     }
+
+    GstValueCalcFinal =
+    (parseFloat(total_cost) + parseFloat(Freight) + parseFloat(Packaging)) *
+    parseFloat(GstValueCalc);
+
     final_total =
       parseFloat(total_cost) +
-      parseFloat(total_cost) * parseFloat(GstValueCalc);
+      parseFloat(Freight) +
+      parseFloat(Packaging) +
+      parseFloat(GstValueCalcFinal);
 
     console.log(GstValue, total_cost, GstValueCalc, final_total);
 
@@ -57,18 +80,23 @@ const pdfgenProduct = async (req, res) => {
       console.log(logo);
       const html = await ejs.renderFile(filePathName, {
         itemList: itemList,
+        item_make: itemList[0].item_make,
         contactData: req.body.contactDetails,
-        contact_name: req.body.contactDetails.contact_name.toUpperCase(),
+        contact_name: req.body.contactDetails.contact_name,
 
-        refno: req.body.uuid_id,
+        refno: refno,
         total_cost: total_cost,
 
         GstTypeInfo: GstTypeInfo,
         GstValue: GstValue,
-        final_total: final_total,
+        Freight: Freight,
+        Packaging: Packaging,
 
-        packing_charge: req.body.packing_charge,
-        transport_charge: req.body.transport_charge,
+        total_cost: total_cost,
+        final_total: final_total,
+        GstValueCalc: GstValueCalc*100,
+        GstValueCalcFinal: GstValueCalcFinal,
+
         payment_terms: req.body.payment_terms,
         delivery: req.body.delivery,
         offer_validity: req.body.offer_validity,
@@ -258,11 +286,16 @@ const deleteTaxInvoice = async (req, res) => {
 };
 
 const pdfgenTaxInvoice = async (req, res) => {
+  console.log(req.body);
   try {
-    var total_cost = 0;
-    var final_total = 0;
     var TaxInvoice = req.body.TaxInvoicedata[0];
     var itemList = TaxInvoice.itemList;
+    
+    var total_cost = 0;
+    var final_total = 0;
+    var GstValueCalc = 0;
+    var GstValueCalcFinal = 0;
+
     var GstValue = TaxInvoice.gst_value;
     var GstTypeInfo = TaxInvoice.GstTypeInfo;
 
@@ -271,14 +304,27 @@ const pdfgenTaxInvoice = async (req, res) => {
       console.log(total_cost);
     });
 
-    var GstValueCalc =
-      GstTypeInfo === "IGST" ? GstValue / 100 : (GstValue * 2) / 100;
-    if (GstValueCalc === 0) {
-      GstValueCalc = 1;
+    if (GstTypeInfo === "IGST") {
+      GstValueCalc = GstValue / 100;
+      if (GstValueCalc === 0) {
+        GstValueCalc = 0.01;
+        console.log("0 gst", GstValueCalc);
+      }
+    } else {
+      GstValueCalc = (GstValue * 2) / 100;
+      if (GstValueCalc === 0) {
+        GstValueCalc = 0.01;
+        console.log("0 gst", GstValueCalc);
+      }
     }
+
+    GstValueCalcFinal =
+    (parseFloat(total_cost)) *
+    parseFloat(GstValueCalc);
+
     final_total =
       parseFloat(total_cost) +
-      parseFloat(total_cost) * parseFloat(GstValueCalc);
+      parseFloat(GstValueCalcFinal);
 
     console.log(GstValue, total_cost, GstValueCalc, final_total);
 
@@ -300,7 +346,9 @@ const pdfgenTaxInvoice = async (req, res) => {
 
       const html = await ejs.renderFile(filePathName, {
         itemList: itemList,
+        item_make: itemList[0].item_make,
         contactData: req.body.contactDetails,
+        companyData: req.body.companyDetails,
 
         po_no: TaxInvoice.po_no,
         po_date: TaxInvoice.po_date,
@@ -308,17 +356,18 @@ const pdfgenTaxInvoice = async (req, res) => {
         invoice_date: TaxInvoice.invoice_date,
         challan_no: TaxInvoice.challan_no,
         challan_date: TaxInvoice.challan_date,
-
-        customer_name: TaxInvoice.customer_name,
-        customer_phone: TaxInvoice.customer_phone,
-        customer_address: TaxInvoice.customer_address,
-        company_name: TaxInvoice.company_name,
+        
         gst_no: TaxInvoice.gst_no,
+        vendor_no: TaxInvoice.vendor_no,
+        placeofsupply: TaxInvoice.placeofsupply,
 
-        total_cost: total_cost,
         GstTypeInfo: GstTypeInfo,
         GstValue: GstValue,
+
+        total_cost: total_cost,
         final_total: final_total,
+        GstValueCalc: GstValueCalc*100,
+        GstValueCalcFinal: GstValueCalcFinal,
 
         watermark: watermark,
         logo: logo,
@@ -407,9 +456,10 @@ const downloadTaxInvoice = async (req, res) => {
 };
 
 const pdfgenChallan = async (req, res) => {
+  console.log(__dirname, req.body);
   try {
-    console.log(__dirname, req.body.TaxInvoicedata);
-    var itemList = req.body.itemList;
+    var TaxInvoice = req.body.TaxInvoicedata[0];
+    var itemList = TaxInvoice.itemList;
     var total_quantity = 0;
 
     itemList.forEach((element) => {
@@ -434,13 +484,11 @@ const pdfgenChallan = async (req, res) => {
         "/genchallan.ejs"
       );
 
-      var TaxInvoice = req.body.TaxInvoicedata[0];
-      console.log(TaxInvoice);
-
       const html = await ejs.renderFile(filePathName, {
         itemList: itemList,
+        item_make: itemList[0].item_make,
         contactData: req.body.contactDetails,
-        TaxInvoice: req.body.TaxInvoicedata,
+        companyData: req.body.companyDetails,
 
         po_no: TaxInvoice.po_no,
         po_date: TaxInvoice.po_date,
@@ -449,12 +497,9 @@ const pdfgenChallan = async (req, res) => {
         challan_no: TaxInvoice.challan_no,
         challan_date: TaxInvoice.challan_date,
 
-        customer_name: TaxInvoice.customer_name,
-        customer_phone: TaxInvoice.customer_phone,
-        customer_address: TaxInvoice.customer_address,
-        company_name: TaxInvoice.company_name,
         gst_no: TaxInvoice.gst_no,
         vendor_no: TaxInvoice.vendor_no,
+        placeofsupply: TaxInvoice.placeofsupply,
 
         total_quantity: total_quantity,
 

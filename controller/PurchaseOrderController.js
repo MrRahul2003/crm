@@ -22,26 +22,55 @@ const purchaseordergen = async (req, res) => {
     var itemList = req.body.itemList;
     var total_cost = 0;
     var final_total = 0;
+    var GstValueCalc = 0;
+    var GstValueCalcFinal = 0;
+
+    var Freight = req.body.Freight;
+    var Packaging = req.body.Packaging;
+
     var GstTypeInfo = req.body.GstTypeInfo;
     var GstValue = req.body.GstValue;
-    var Freight = req.body.Freight;
+
+    var refno = req.body.uuid_id;
 
     itemList.forEach((element) => {
-      total_cost = parseInt(total_cost) + parseInt(element.item_total_price);
+      total_cost =
+        parseFloat(total_cost) + parseFloat(element.item_total_price);
     });
-    var GstValueCalc =
-      GstTypeInfo === "IGST"
-        ? req.body.GstValue / 100
-        : (req.body.GstValue * 2) / 100;
 
-    if (GstValueCalc === 0) {
-      GstValueCalc = 1;
+    if (GstTypeInfo === "IGST") {
+      GstValueCalc = GstValue / 100;
+      if (GstValueCalc === 0) {
+        GstValueCalc = 0.01;
+        console.log("0 gst", GstValueCalc);
+      }
+    } else {
+      GstValueCalc = (GstValue * 2) / 100;
+      if (GstValueCalc === 0) {
+        GstValueCalc = 0.01;
+        console.log("0 gst", GstValueCalc);
+      }
     }
 
-    final_total =
-      (parseFloat(total_cost) + parseFloat(Freight)) * parseFloat(GstValueCalc);
+    GstValueCalcFinal =
+      (parseFloat(total_cost) + parseFloat(Freight) + parseFloat(Packaging)) *
+      parseFloat(GstValueCalc);
 
-    console.log(GstValue, total_cost, Freight, GstValueCalc, final_total);
+    final_total =
+      parseFloat(total_cost) +
+      parseFloat(Freight) +
+      parseFloat(Packaging) +
+      parseFloat(GstValueCalcFinal);
+
+    console.log(
+      GstValue,
+      total_cost,
+      Freight,
+      Packaging,
+      GstValueCalc,
+      GstValueCalcFinal,
+      final_total
+    );
 
     if (itemList.length === 0) {
       res.status(500).send("no itemList found");
@@ -62,16 +91,22 @@ const purchaseordergen = async (req, res) => {
 
       const html = await ejs.renderFile(filePathName, {
         itemList: itemList,
+        item_make: itemList[0].item_make,
         vendorData: req.body.vendorData,
-        refno: req.body.uuid_id,
-        total_cost: total_cost,
-        vendor_name: req.body.vendor_name,
-        vendor_email: req.body.vendor_email,
+        refno: refno,
+
+        vendor_name: req.body.vendorData.vendor_name,
+        vendor_email: req.body.vendorData.vendor_email,
 
         GstTypeInfo: GstTypeInfo,
         GstValue: GstValue,
         Freight: Freight,
+        Packaging: Packaging,
+
+        total_cost: total_cost,
         final_total: final_total,
+        GstValueCalc: GstValueCalc*100,
+        GstValueCalcFinal: GstValueCalcFinal,
 
         watermark: watermark,
         logo: logo,
