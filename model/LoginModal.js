@@ -17,6 +17,9 @@ const loginSchema = new mongoose.Schema({
     type: String,
     select:true
   },
+  paymentKey: {
+    type: String,
+  },
   login_addingdate: {
     type: String,
   },

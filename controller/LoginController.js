@@ -53,6 +53,7 @@ const addLogin = async (req, res) => {
           email: userExist.email,
           username: userExist.username,
           userType: userExist.userType,
+          paymentKey: userExist.paymentKey,
         });
       }
     } else {
