@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Quotation pdf </title>
-    <link rel="shortcut icon" href="/logo.jpeg" />
-    <link rel="stylesheet" href="./gen.css">
-    <style type="text/css">
-      *{
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Customer Quotation pdf </title>
+   <link rel="shortcut icon" href="/logo.jpeg" />
+   <link rel="stylesheet" href="./gen.css">
+   <style type="text/css">
+      * {
          font-family: 'Trebuchet MS', sans-serif;
       }
+
       td {
          border: solid 2px rgb(65, 35, 65);
-        margin: 3px;
-        padding: 2px;
-        display:table-cell;
-        word-wrap: break-all;
+         margin: 3px;
+         padding: 2px;
+         display: table-cell;
+         word-wrap: break-all;
       }
+
       p {
-      text-indent: 10px;
-    }
-    </style>
-  </head>
-  <body>
+         text-indent: 10px;
+      }
+   </style>
+</head>
+
+<body>
    <div className="main-wrapper">
       <div className="page-wrapper">
          <div className="content container-fluid">
             <div className="row justify-content-center">
                <div className="col-xl-6 mx-4">
                   <div className="card invoice-info-card">
-                     <div className="card-body" 
-                        style="
+                     <div className="card-body" style="
                         width: 185mm;
                         height: 270mm;
                         margin: 0;
@@ -49,43 +52,29 @@
                            <div className="row">
                               <div className="col-md-12">
                                  <div className="invoice-logo">
-                                    <img
-                                       src="<%= logo %>"
-                                       width="120"
-                                       height="120"
-                                       alt="Image"
-                                       style="vertical-align: middle"
-                                       />
-                                       <h2
-                                       style="
-                                         display: inline-block;
-                                         color: rgb(32, 91, 229);
-                                         margin-top: 20px;
-                                         font-size: 28px;
-                                       "
-                                     >
+                                    <img src="<%= logo %>" width="120" height="130" alt="Image"
+                                       style="vertical-align: middle" />
+                                    <h2 style="
+                                    display: inline-block;
+                                    color: rgb(32, 91, 229);
+                                    margin-top: 20px;
+                                    font-size: 25px;
+                                    ">
                                        AEGIS PROJECTS TECHNOLOGY PVT. LTD
-                                       <small
-                                         style="
-                                           display: block;
-                                           text-align: center;
-                                           font-size: 13px;
-                                         "
-                                         >Office no.1, Swami Samarth Blg, Opp. Sangrila
-                                         Biscuit Company,
+                                       <small style="display: block; text-align: center; font-size: 13px;">Office no.1,
+                                          Swami Samarth Blg, Opp. Sangrila Biscuit Company,
                                        </small>
-                                       <small
-                                         style="
-                                           display: block;
-                                           text-align: center;
-                                           font-size: 13px;
-                                         "
-                                       >
-                                         Bhandup – west, Mumbai – 400078.
+                                       <small style="display: block; text-align: center; font-size: 13px;"> Bhandup –
+                                          west, Mumbai – 400078.
                                        </small>
-                                     </h2>
-                                    <h3>Date : - <%= new Date().toLocaleString() %></h3>
-                                    <h3>Reference No : - AEGIS/CQ/<%= refno %></h3>
+                                       <small style="display: block; text-align: center; font-size: 13px;"> 9820329458 /
+                                          9820339458
+                                       </small>
+                                    </h2>
+                                    <h3>Date : - <%= new Date().toLocaleString() %>
+                                    </h3>
+                                    <h3>Reference No : - AEGIS/CQ/<%= refno %>
+                                    </h3>
                                  </div>
                               </div>
                            </div>
@@ -100,16 +89,17 @@
                                           display: inline-block;
                                           color: rgb(81, 10, 168);
                                           ">
-                                       To, <br>
-                                       M/S. <%= contact_name %>
+                                          To, <br>
+                                          M/S. <%= contact_name %>
                                        </strong>
                                     </h3>
                                     <h3 className="invoice-details invoice-details-two">
                                        <%= contactData.contact_street %>, <br />
-                                       <%= contactData.contact_city %>, <%= contactData.contact_code %> <br>
-                                       <%= contactData.contact_state %> <%= contactData.contact_country %> <br />
-                                       MOBILE NO : - <%= contactData.contact_phone1 %> <br>
-                                       E mail ID :- <%= contactData.contact_email %> <br>
+                                          <%= contactData.contact_city %>, <%= contactData.contact_code %> <br>
+                                                <%= contactData.contact_state %>
+                                                   <%= contactData.contact_country %> <br />
+                                                      MOBILE NO : - <%= contactData.contact_phone1 %> <br>
+                                                         E mail ID :- <%= contactData.contact_email %> <br>
                                     </h3>
                                  </div>
                               </div>
@@ -119,28 +109,28 @@
                            <div className="row">
                               <div className="col-md-12">
                                  <div className="invoice-info">
-                                    <h3 className="invoice-details invoice-details-two"                 
+                                    <h3 className="invoice-details invoice-details-two"
                                        style="color:rgb(63, 27, 114); font-family: 'Trebuchet MS', sans-serif;">
                                        Dear Sir, <br />
                                        This refers to your email enquiry on dated <%= enquiry_addingdate %>,
-                                       regarding your requirement Compressor
-                                       Spares Parts/Oil.
-                                       <br />
-                                       We thank you very much for the interest evinced in
-                                       our product. <br />
-                                       We take pleasure to submit our lowest offer for
-                                       Compressor Spares Parts/Oil, along with Technical
-                                       specification, Commercial Terms and conditions
-                                       enclosed with the offer.
-                                       <br />
-                                       We are sure our specification will suit to your
-                                       application and award us with your valued order at
-                                       earliest <br />
-                                       However if you have any query or need more
-                                       information, please feel free to contact us. <br />
-                                       Thanking you, <br /> <br>
+                                          regarding your requirement Compressor
+                                          Spares Parts/Oil.
+                                          <br />
+                                          We thank you very much for the interest evinced in
+                                          our product. <br />
+                                          We take pleasure to submit our lowest offer for
+                                          Compressor Spares Parts/Oil, along with Technical
+                                          specification, Commercial Terms and conditions
+                                          enclosed with the offer.
+                                          <br />
+                                          We are sure our specification will suit to your
+                                          application and award us with your valued order at
+                                          earliest <br />
+                                          However if you have any query or need more
+                                          information, please feel free to contact us. <br />
+                                          Thanking you, <br /> <br>
                                     </h3>
-                                    <h2 className="customer-text-one"  style="
+                                    <h2 className="customer-text-one" style="
                                        display: inline-block;
                                        color: rgb(20, 3, 41);
                                        text-decoration-line: underline;
@@ -183,113 +173,119 @@
                                     <h3 style="color:rgb(41, 31, 112);">
                                        A. OFFER ITEMS :
                                     </h3>
-                                    <table                        
-                                       className="mb-0"
-                                       style="
+                                    <table className="mb-0" style="
                                        border: 2px solid rgb(65, 35, 65);
                                        border-collapse: collapse;
                                        width:100%;
                                        table-layout: fixed;
                                        ">
                                        <tr>
-                                          <td
-                                            colspan="7"
-                                            class="padme"
-                                            style="
+                                          <td colspan="7" class="padme" style="
                                               padding-top: 10px;
                                               padding-bottom: 10px;
                                               padding-left: 10px;
                                               font-size: 20px;
                                               color: rgb(41, 31, 112);
-                                            "
-                                          >
-                                            <strong> MAKE -- <%= item_make %> </strong>
+                                            ">
+                                             <strong> MAKE -- <%= item_make %> </strong>
                                           </td>
-                                        </tr>
-                                          <tr>
-                                             <td style="padding: 5px; font-size: 20px;
-                                  color: rgb(41, 31, 112);"> <strong> Modal No  </strong>  </td>
-                                             <td style="padding: 5px; font-size: 20px;
-                                  color: rgb(41, 31, 112);"> <strong> Part Name  </strong>  </td>
-                                             <td style="padding: 5px; font-size: 20px;
-                                  color: rgb(41, 31, 112);"> <strong>  Part No </strong>  </td>
-                                             <td style="padding: 5px; font-size: 20px;
-                                  color: rgb(41, 31, 112);"> <strong> HSN Code  </strong>  </td>
-                                             <td style="padding: 5px; font-size: 20px;
-                                  color: rgb(41, 31, 112);"> <strong> Unit Price  </strong>  </td>
-                                             <td style="padding: 5px; font-size: 20px;
-                                  color: rgb(41, 31, 112);"> <strong>  Quantity </strong>  </td>
-                                             <td style="padding: 5px; font-size: 20px; 
-                                  color: rgb(41, 31, 112);"> <strong>  Total Price </strong> </td>
-                                          </tr>
-                                       <% if(itemList.length >0){ %>
-                                       <% itemList.forEach((item,i)=>{%>
-                                       <tr key="1">
-                                          <td style="padding: 5px; word-wrap: break-word"><%= item.item_modalNo %></td>
-                                          <td style="padding: 5px; word-wrap: break-word"><%= item.item_name %></td>
-                                          <td style="padding: 5px; word-wrap: break-word"><%= item.item_partNo %></td>
-                                          <td style="padding: 5px; word-wrap: break-word"><%= item.item_HSN %></td>
-                                          <td style="padding: 5px; word-wrap: break-word"><%= item.item_price %></td>
-                                          <td style="padding: 5px; word-wrap: break-word"><%= item.item_quantity %></td>
-                                          <td style="padding: 5px; word-wrap: break-word"><%= item.total %></td>
                                        </tr>
-                                       <% }) %>
-                                       <%} %>
-                                       <tr align="right">
-                                          <td align="right" colspan="6" style="padding: 7px;">Sub Total Amount </td>
-                                          <td colspan="1" style="padding: 7px;"><strong> ₹ <%= total_cost %> /-</strong></td>
+                                       <tr>
+                                          <td style="padding: 5px; font-size: 20px;
+                                  color: rgb(41, 31, 112);"> <strong> Modal No </strong> </td>
+                                          <td style="padding: 5px; font-size: 20px;
+                                  color: rgb(41, 31, 112);"> <strong> Part Name </strong> </td>
+                                          <td style="padding: 5px; font-size: 20px;
+                                  color: rgb(41, 31, 112);"> <strong> Part No </strong> </td>
+                                          <td style="padding: 5px; font-size: 20px;
+                                  color: rgb(41, 31, 112);"> <strong> HSN Code </strong> </td>
+                                          <td style="padding: 5px; font-size: 20px;
+                                  color: rgb(41, 31, 112);"> <strong> Unit Price </strong> </td>
+                                          <td style="padding: 5px; font-size: 20px;
+                                  color: rgb(41, 31, 112);"> <strong> Quantity </strong> </td>
+                                          <td style="padding: 5px; font-size: 20px; 
+                                  color: rgb(41, 31, 112);"> <strong> Total Price </strong> </td>
                                        </tr>
+                                       <% if(itemList.length>0){ %>
+                                          <% itemList.forEach((item,i)=>{%>
+                                             <tr key="1">
+                                                <td style="padding: 5px; word-wrap: break-word">
+                                                   <%= item.item_modalNo %>
+                                                </td>
+                                                <td style="padding: 5px; word-wrap: break-word">
+                                                   <%= item.item_name %>
+                                                </td>
+                                                <td style="padding: 5px; word-wrap: break-word">
+                                                   <%= item.item_partNo %>
+                                                </td>
+                                                <td style="padding: 5px; word-wrap: break-word">
+                                                   <%= item.item_HSN %>
+                                                </td>
+                                                <td style="padding: 5px; word-wrap: break-word">
+                                                   <%= item.item_price %>
+                                                </td>
+                                                <td style="padding: 5px; word-wrap: break-word">
+                                                   <%= item.item_quantity %>
+                                                </td>
+                                                <td style="padding: 5px; word-wrap: break-word">
+                                                   <%= item.total %>
+                                                </td>
+                                             </tr>
+                                             <% }) %>
+                                                <%} %>
+                                                   <tr align="right">
+                                                      <td align="right" colspan="6" style="padding: 7px;">Sub Total
+                                                         Amount </td>
+                                                      <td colspan="1" style="padding: 7px;"><strong> ₹ <%= total_cost %>
+                                                               /-</strong></td>
+                                                   </tr>
 
-                                       <% if(GstTypeInfo === 'IGST'){ %>
-                                          <tr align="right">
-                                            <td
-                                              align="right"
-                                              colspan="6"
-                                              style="padding: 7px"
-                                            >
-                                              <strong>
-                                               <%= GstTypeInfo %>
-                                              </strong>
-                                            </td>
-                                            <td colspan="1" style="padding: 7px">
-                                              <strong> <%= GstValueCalc %> %</strong> 
-                                            </td>
-                                          </tr>
-                                          <% } else{ %>
-                                          <tr align="right">
-                                            <td
-                                              align="right"
-                                              colspan="6"
-                                              style="padding: 7px"
-                                            >
-                                              <strong>
-                                                CGST 
-                                              </strong>
-                                            </td>
-                                            <td colspan="1" style="padding: 7px">
-                                              <strong> <%= GstValueCalc / 2 %> %</strong> 
-                                            </td>
-                                          </tr>
-                                          <tr align="right">
-                                            <td
-                                              align="right"
-                                              colspan="6"
-                                              style="padding: 7px"
-                                            >
-                                              <strong>
-                                                SGST 
-                                              </strong>
-                                            </td>
-                                            <td colspan="1" style="padding: 7px">
-                                              <strong> <%= GstValueCalc / 2 %> %</strong> 
-                                            </td>
-                                          </tr>
-                                          <% } %>
+                                                   <% if(GstTypeInfo==='IGST' ){ %>
+                                                      <tr align="right">
+                                                         <td align="right" colspan="6" style="padding: 7px">
+                                                            <strong>
+                                                               <%= GstTypeInfo %>
+                                                            </strong>
+                                                         </td>
+                                                         <td colspan="1" style="padding: 7px">
+                                                            <strong>
+                                                               <%= GstValueCalc %> %
+                                                            </strong>
+                                                         </td>
+                                                      </tr>
+                                                      <% } else{ %>
+                                                         <tr align="right">
+                                                            <td align="right" colspan="6" style="padding: 7px">
+                                                               <strong>
+                                                                  CGST
+                                                               </strong>
+                                                            </td>
+                                                            <td colspan="1" style="padding: 7px">
+                                                               <strong>
+                                                                  <%= GstValueCalc / 2 %> %
+                                                               </strong>
+                                                            </td>
+                                                         </tr>
+                                                         <tr align="right">
+                                                            <td align="right" colspan="6" style="padding: 7px">
+                                                               <strong>
+                                                                  SGST
+                                                               </strong>
+                                                            </td>
+                                                            <td colspan="1" style="padding: 7px">
+                                                               <strong>
+                                                                  <%= GstValueCalc / 2 %> %
+                                                               </strong>
+                                                            </td>
+                                                         </tr>
+                                                         <% } %>
 
-                                       <tr align="right">
-                                          <td align="right" colspan="6" style="padding: 7px;">Total Amount</td>
-                                          <td style="padding: 7px;"> <strong> ₹ <%= final_total %> /-</strong></td>
-                                       </tr>
+                                                            <tr align="right">
+                                                               <td align="right" colspan="6" style="padding: 7px;">Total
+                                                                  Amount</td>
+                                                               <td style="padding: 7px;"> <strong> ₹ <%= final_total %>
+                                                                        /-</strong></td>
+                                                            </tr>
                                     </table>
                                  </div>
                               </div>
@@ -312,7 +308,7 @@
                         z-index: -1;
                         ">
 
-                        <div className="invoice-item invoice-table-wrap" >
+                        <div className="invoice-item invoice-table-wrap">
                            <div className="row">
                               <div className="col-md-12">
                                  <div className="table-responsive">
@@ -334,17 +330,23 @@
                                           <tr>
                                              <td style="padding: 5px;">04</td>
                                              <td style="padding: 5px;">PAYMENTS TERMS </td>
-                                             <td style="padding: 5px;"><%= payment_terms %></td>
+                                             <td style="padding: 5px;">
+                                                <%= payment_terms %>
+                                             </td>
                                           </tr>
                                           <tr>
                                              <td style="padding: 5px;">05</td>
                                              <td style="padding: 5px;">DELIVERY </td>
-                                             <td style="padding: 5px;"><%= delivery %></td>
+                                             <td style="padding: 5px;">
+                                                <%= delivery %>
+                                             </td>
                                           </tr>
                                           <tr>
                                              <td style="padding: 5px;">06</td>
                                              <td style="padding: 5px;">OFFER VALIDITY </td>
-                                             <td style="padding: 5px;"><%= offer_validity %></td>
+                                             <td style="padding: 5px;">
+                                                <%= offer_validity %>
+                                             </td>
                                           </tr>
                                        </tbody>
                                     </table>
@@ -354,9 +356,9 @@
                                  <div className="invoice-info">
                                     <h3 className="invoice-details invoice-details-two">
                                        <strong className="customer-text-one">
-                                       Thanking You
-                                       We wait for your reply
-                                       AEGIS Projects Technology Pvt Ltd. <br />
+                                          Thanking You
+                                          We wait for your reply
+                                          AEGIS Projects Technology Pvt Ltd. <br />
                                        </strong>
                                        <br>
                                     </h3>
@@ -365,13 +367,15 @@
                            </div>
                         </div>
 
-                        <div className="row align-items-center justify-content-center" style="page-break-after: always;" >
+                        <div className="row align-items-center justify-content-center"
+                           style="page-break-after: always;">
                            <div className="col-lg-12 col-md-12">
                               <div className="invoice-terms">
                                  <h4>Notes:</h4>
                                  <ul>
                                     <li>
-                                       <h3 style="color:rgb(67, 51, 170);">We Supply All Compressors Make Spares Parts.</h3>
+                                       <h3 style="color:rgb(67, 51, 170);">We Supply All Compressors Make Spares Parts.
+                                       </h3>
                                     </li>
                                     <li>
                                        <h3 style="color:rgb(67, 51, 170);">
@@ -381,13 +385,16 @@
                                        </h3>
                                     </li>
                                     <li>
-                                       <h3 style="color:rgb(67, 51, 170);">We Supply All Compressors Make Spares Parts.</h3>
+                                       <h3 style="color:rgb(67, 51, 170);">We Supply All Compressors Make Spares Parts.
+                                       </h3>
                                     </li>
                                     <li>
-                                       <h3 style="color:rgb(67, 51, 170);">Compressor Oil Packed In Plain HDP Can/Barrel.</h3>
+                                       <h3 style="color:rgb(67, 51, 170);">Compressor Oil Packed In Plain HDP
+                                          Can/Barrel.</h3>
                                     </li>
                                     <li>
-                                       <h3 style="color:rgb(67, 51, 170);">Once Acceptance Letter (Against Order) Had Confirmed
+                                       <h3 style="color:rgb(67, 51, 170);">Once Acceptance Letter (Against Order) Had
+                                          Confirmed
                                           By Both Parties, Cancellation Order Will Be Not
                                           Accepted & Amount Will Be Not Refund Back.
                                        </h3>
@@ -404,7 +411,7 @@
                      </div>
                      <div>
                         <!-- {/* -----------------------------isko change mat karo--------------------------- */} -->
-                        <div className="invoice-item invoice-table-wrap"  style="page-break-after: always;">
+                        <div className="invoice-item invoice-table-wrap" style="page-break-after: always;">
                            <div className="row">
                               <div className="col-md-12">
                                  <div className="table-responsive" style="
@@ -450,7 +457,8 @@
                                           <tr>
                                              <td>Account Group</td>
                                              <td>
-                                                &nbsp; &nbsp; AEGIS Projects Technology Pvt Ltd – Mumbai Office No – 01, <br>
+                                                &nbsp; &nbsp; AEGIS Projects Technology Pvt Ltd – Mumbai Office No – 01,
+                                                <br>
                                                 &nbsp; &nbsp; Swami Samarth Bldg – Next Kala Udyog, LBS Marg, <br>
                                                 &nbsp; &nbsp; Bhandup (w) , Mumbai – 400078 , Maharashtra <br>
                                              </td>
@@ -563,4 +571,5 @@
    </div>
    </div>
 </body>
+
 </html>

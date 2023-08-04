@@ -106,7 +106,8 @@ import {
   getPaymentPurchaseOrder,
 } from "../controller/PurchaseOrderpayment.js";
 import { addPaymentProductOrder, getPaymentProductOrder } from "../controller/ProductOrderPayment.js";
-import { addVendorPaymentData, addVendorTaxInvoice, deleteVendorPayments, deleteVendorTaxInvoice, getVendorPaymentData, getVendorTaxInvoice, getallVendorTaxInvoice } from "../controller/VendorTaxInvoice.js";
+import { addVendorPaymentData, addVendorTaxInvoice, deleteVendorPayments, deleteVendorTaxInvoice, getVendorPaymentData, getVendorTaxInvoice, getallVendorPaymentData, getallVendorTaxInvoice } from "../controller/VendorTaxInvoice.js";
+import { addCustomerPaymentData, addCustomerTaxInvoice, deleteCustomerPayments, deleteCustomerTaxInvoice, getCustomerPaymentData, getCustomerTaxInvoice, getallCustomerPaymentData, getallCustomerTaxInvoice } from "../controller/CustomerTaxInvoice.js";
 
 const route = express.Router();
 
@@ -189,6 +190,7 @@ route.post("/purchaseorder/getpayment", getPaymentPurchaseOrder);
 
 // taxinvoice payment
 route.post("/purchaseorder/vendorpayment/addtaxinvoicepayment", addVendorPaymentData);
+route.post("/purchaseorder/vendorpayment/getalltaxinvoicepayment", getallVendorPaymentData);
 route.post("/purchaseorder/vendorpayment/gettaxinvoicepayment", getVendorPaymentData);
 route.post("/purchaseorder/vendorpayment/deletetaxinvoicepayment", deleteVendorPayments);
 
@@ -218,6 +220,8 @@ route.post(
 );
 route.post("/purchaseorder/getvendorbill", getVendorBill);
 route.post("/purchaseorder/downloadvendorbill", downloadVendorBill);
+
+// taxinvoice vendor
 route.post("/purchaseorder/addvendortaxinvoice", addVendorTaxInvoice);
 route.post("/purchaseorder/getvendortaxinvoice", getVendorTaxInvoice);
 route.post("/purchaseorder/getallvendortaxinvoice", getallVendorTaxInvoice);
@@ -235,5 +239,17 @@ route.post("/productorder/downloadtaxinvoice", downloadTaxInvoice);
 route.post("/productorder/genpdfchallan", pdfgenChallan);
 route.post("/productorder/sendmailchallan", sendMailChallan);
 route.post("/productorder/downloadchallan", downloadChallan);
+
+// taxinvoice customer
+route.post("/productorder/addcustomertaxinvoice", addCustomerTaxInvoice);
+route.post("/productorder/getcustomertaxinvoice", getCustomerTaxInvoice);
+route.post("/productorder/getallcustomertaxinvoice", getallCustomerTaxInvoice);
+route.post("/productorder/deletecustomertaxinvoice", deleteCustomerTaxInvoice);
+
+// taxinvoice payment
+route.post("/productorder/customerpayment/addtaxinvoicepayment", addCustomerPaymentData);
+route.post("/productorder/customerpayment/getalltaxinvoicepayment", getallCustomerPaymentData);
+route.post("/productorder/customerpayment/gettaxinvoicepayment", getCustomerPaymentData);
+route.post("/productorder/customerpayment/deletetaxinvoicepayment", deleteCustomerPayments);
 
 export default route;
