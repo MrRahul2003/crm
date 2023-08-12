@@ -66,6 +66,7 @@ import {
   addVendor,
   deleteVendor,
   editVendor,
+  getVendorName,
 } from "../controller/VendorController.js";
 import { addLogin, addSignin } from "../controller/LoginController.js";
 import {
@@ -166,6 +167,7 @@ route.post("/enquiry/editenquiry", editenquiry);
 route.post("/vendor/addvendor", addVendor);
 route.post("/vendor/getallvendors", getAllVendor);
 route.post("/vendor/getvendor", getVendor);
+route.post("/vendor/getvendorname", getVendorName);
 route.post("/vendor/editvendor", editVendor);
 route.post("/vendor/deletevendor", deleteVendor);
 
