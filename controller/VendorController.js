@@ -41,7 +41,8 @@ const getVendorName = async (req, res) => {
     const VendorName = await Vendor.find({
       _id: vendor_id,
     });
-    return res.status(200).json(VendorName);
+    console.log(VendorName[0].vendor_name);
+    return res.status(200).json(VendorName[0].vendor_name);
   } catch (error) {
     return res.status(500).json(error.message);
   }
